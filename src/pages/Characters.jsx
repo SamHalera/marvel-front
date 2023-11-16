@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { set } from "mongoose";
@@ -13,11 +13,17 @@ const Charachters = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [display, setDisplay] = useState(false);
+
+  //states for query
   const [name, setName] = useState("");
+  const [skip, setSkip] = useState(0);
   // let valueForNbPages = data.count / data.limit;
   const [nbPages, setNbPages] = useState();
 
-  console.log("nb of pages =>", Math.round(nbPages));
+  console.log("nb of pages =>", nbPages);
+  console.log("page for query=>", skip);
+  console.log("name =>", name);
+  // console.log("limit =>", limit);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,11 +31,12 @@ const Charachters = () => {
 
       try {
         const response = await axios.get(
-          `https://site--backend-marvel--v5zlz7yt85wg.code.run?name=${name}`
+          `http://localhost:3000?name=${name}&skip=${skip}`
+          // `http://localhost:3000?skip=${skip}`
         );
-        // console.log("data =>", response.data);
+        console.log("data =>", response.data);
         setData(response.data);
-        setNbPages(response.data.count / response.data.limit);
+        setNbPages(Math.ceil(response.data.count / 100));
 
         setIsLoading(false);
         //when data are created we scroll smoothly to the div of list
@@ -41,7 +48,7 @@ const Charachters = () => {
     };
 
     fetchData();
-  }, [name]);
+  }, [name, skip]);
 
   return (
     <main className="characters-main">
@@ -56,6 +63,7 @@ const Charachters = () => {
             <input
               onChange={(event) => {
                 setName(event.target.value);
+                setSkip("");
               }}
               type="text"
               id="name"
@@ -71,17 +79,15 @@ const Charachters = () => {
         <div className="container">
           <div className="list-container">
             <h2 className="results-title">Results: {data.count}</h2>
+
             <section className="list characters-list">
               {data.results.map((result, index) => {
                 return (
-                  <article
-                    state={{ id: result._id }}
-                    key={result.name}
-                    className="item character-item"
-                  >
+                  <article key={result._id} className="item character-item">
                     <Link
                       className="image-wrapper"
-                      to={`/character/${result._id}`}
+                      to={`/comics/${result._id}`}
+                      // state={{ id: result._id }}
                     >
                       <img
                         src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
@@ -116,7 +122,11 @@ const Charachters = () => {
                 );
               })}
             </section>
-            <Pagination data={{ ...data }} nbPages={nbPages} />
+            <Pagination
+              data={{ ...data }}
+              nbPages={nbPages}
+              setSkip={setSkip}
+            />
           </div>
         </div>
       )}

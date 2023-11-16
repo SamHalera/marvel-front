@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -6,15 +6,15 @@ const Character = () => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const location = useLocation();
-  const { id } = location.state;
+  const params = useParams();
+  const id = params.characterId;
+  // const location = useLocation();
+  // const { id } = location.state;
   console.log("data=>", data);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://site--backend-marvel--v5zlz7yt85wg.code.run/character/${id}`
-        );
+        const response = await axios.get(`http://localhost:3000/comics/${id}`);
 
         console.log("rersponse.data =>", response.data);
         setData(response.data);
@@ -42,7 +42,7 @@ const Character = () => {
               <h2>{data.name}</h2>
             </div>
             <div className="list-of-comics">
-              {data.comicsArray.map((comic) => {
+              {data.comics.map((comic) => {
                 return (
                   <article key={comic._id}>
                     <img

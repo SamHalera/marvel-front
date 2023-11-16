@@ -15,6 +15,8 @@ import Favorites from "./pages/Favorites";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [favorite, setFavorite] = useState();
+  const handleFavorite = (id, cookie) => {};
 
   return (
     <>
@@ -23,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Characters />}></Route>
           <Route path="/comics" element={<Comics />}></Route>
+          <Route path="/comics/:characterId" element={<Character />}></Route>
           <Route path="/character/:id" element={<Character />}></Route>
           <Route path="/favorites" element={<Favorites />}></Route>
         </Routes>
