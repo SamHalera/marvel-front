@@ -13,7 +13,7 @@ const Character = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/character/${id}`
+          `https://site--backend-marvel--v5zlz7yt85wg.code.run/character/${id}`
         );
 
         console.log("rersponse.data =>", response.data);
@@ -28,7 +28,7 @@ const Character = () => {
   }, []);
 
   return isLoading ? (
-    <p>LOADING</p>
+    <div className="loader">LOADING</div>
   ) : (
     <main className="one-character-main">
       <div className="container">

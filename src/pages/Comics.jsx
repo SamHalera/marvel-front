@@ -8,7 +8,9 @@ const Comics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/comics`);
+        const response = await axios.get(
+          `https://site--backend-marvel--v5zlz7yt85wg.code.run/comics`
+        );
         console.log("data =>", response.data);
         setData(response.data);
         setIsLoading(false);
@@ -19,7 +21,7 @@ const Comics = () => {
     fetchData();
   }, []);
   return isLoading ? (
-    <p>LOADING</p>
+    <div className="loader">LOADING</div>
   ) : (
     <main className="comics-main">
       <div className="container">

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+//assets
 import "./App.css";
+import spinner from "./assets/images/spinner.gif";
 //Components
 import Header from "./components/Header";
 

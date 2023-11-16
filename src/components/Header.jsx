@@ -3,7 +3,9 @@ import logo from "../assets/images/logo.svg";
 const Header = () => {
   return (
     <header>
-      <img src={logo} alt="" />
+      <Link to="/">
+        <img src={logo} alt="" />
+      </Link>
       <nav>
         <Link to="/">Characters</Link>
         <Link to="/comics">Comics</Link>
