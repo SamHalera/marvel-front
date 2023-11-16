@@ -1,42 +1,142 @@
-#root {
+/*=====GENRAL=======*/
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  font-family: "Montserrat", sans-serif;
+}
+
+.container {
   max-width: 1280px;
+  display: flex;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #202020;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+header img {
+  width: 150px;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  transition: all 0.4s ease-in-out;
+  color: white;
+  border-bottom: transparent;
+  padding-bottom: 8px;
+}
+nav a:hover {
+  color: #ed1d24;
+  border-bottom: 3px solid #ed1d24;
+}
+.overlay {
+  width: 100%;
+  background: rgb(0 0 0 / 59%);
+  height: 70vh;
+}
+.bg-settings {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+main {
+  height: auto;
+  background-color: #202020;
+  color: white;
+}
+a {
+  color: white;
+  font-weight: 300;
+  text-decoration: none;
+}
+/*=====HOME-CHARACTERS=======*/
+
+.bg-img {
+  height: 70vh;
+  background-color: #ed1d24;
+  width: 100%;
+  background-image: url("../src/assets/images/bg-img-home.jpg");
+}
+.characters-main .overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.characters-main h1 {
+  font-size: 70px;
+  color: white;
+  text-transform: capitalize;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 25px;
+}
+.list .item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 20px 0;
+  gap: 15px;
+}
+.list .item h2 {
+  font-size: 24px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.list .item p {
+  line-height: 22px;
+}
+.list .item img {
+  /* width: 300px; */
+  transition: all 2s ease-in-out;
+}
+.characters-main .list .item:hover img {
+  transform: scale(1.2);
+  opacity: 0.8;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.image-wrapper {
+  width: 300px;
+  height: 450px;
+  background-color: #ed1d24;
+  overflow: hidden;
 }
 
-.card {
-  padding: 2em;
+/*=====ONE-CHARACTER=======*/
+.character-wrapper {
+  margin-top: 40px;
+}
+.character {
+  display: flex;
+  gap: 40px;
 }
 
-.read-the-docs {
-  color: #888;
+.list-of-comics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
 }
+.list-of-comics article {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  flex: 1;
+}
+.list-of-comics article h3 {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* property for img 
+
+    transform: perspective(100px) rotate3d(0,22,-1,13deg);
+*/
