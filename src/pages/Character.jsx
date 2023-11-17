@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import baseUrl from "../api";
 
 const Character = () => {
   const [data, setData] = useState({});
@@ -14,7 +15,7 @@ const Character = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/comics/${id}`);
+        const response = await axios.get(`${baseUrl}/comics/${id}`);
 
         console.log("rersponse.data =>", response.data);
         setData(response.data);

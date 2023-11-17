@@ -3,7 +3,7 @@ import logo from "../assets/images/logo.svg";
 const Header = () => {
   return (
     <header>
-      <Link to="/">
+      <Link to="/" className="logo">
         <img src={logo} alt="" />
       </Link>
       <nav>

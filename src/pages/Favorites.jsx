@@ -1,9 +1,11 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import baseUrl from "../api";
 const Favorites = () => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+
   console.log("localStorage=> ", localStorage);
   const localStorageFavorites = JSON.parse(localStorage.getItem("favorites"));
   console.log("localStorageARRAY=> ", localStorageFavorites);
@@ -18,7 +20,7 @@ const Favorites = () => {
 
         try {
           const response = await axios.get(
-            `http://localhost:3000/character/${characters[i]}`
+            `${baseUrl}/character/${characters[i]}`
           );
 
           console.log("data =>", response.data);

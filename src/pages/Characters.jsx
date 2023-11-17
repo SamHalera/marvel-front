@@ -1,13 +1,23 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import baseUrl from "../api";
 
 //components
-import Pagination from "../components/Pagination";
+// import Pagination from "../components/Pagination";
+import PaginationAltern from "../components/PaginationAltern";
 
 //assets
 
-const Charachters = ({ handleClickFavorite, favorites }) => {
+const Charachters = ({
+  handleClickFavorite,
+  favorites,
+  characterFavorites,
+  handleUserFavorites,
+  storageHeroFavorites,
+  setStorageHeroFavorites,
+  truncateStr,
+}) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -15,37 +25,37 @@ const Charachters = ({ handleClickFavorite, favorites }) => {
 
   //states for query
   const [name, setName] = useState("");
-  const [skip, setSkip] = useState(0);
-
+  const [page, setPage] = useState(1);
   const [nbPages, setNbPages] = useState();
+  const [skip, setSkip] = useState(1);
 
-  console.log("localStorage=> ", localStorage);
-  const localStorageFavorites = JSON.parse(localStorage.getItem("favorites"));
+  console.log("localStorage from setLocalStorage=> ", localStorage);
+
   useEffect(() => {
     const fetchData = async () => {
       console.log("INSIDE FETCHDATA");
 
       try {
         const response = await axios.get(
-          `http://localhost:3000?name=${name}&skip=${skip}`
+          `${baseUrl}?name=${name}`
           // `http://localhost:3000?skip=${skip}`
         );
 
-        console.log("data =>", response.data);
+        // console.log("data =>", response.data);
         setData(response.data);
         setNbPages(Math.ceil(response.data.count / 100));
 
         setIsLoading(false);
         //when data are created we scroll smoothly to the div of list
-        // document.body.scrollTop = 400; // For Safari
-        // document.documentElement.scrollTop = 400; // For Chrome, Firefox, IE and Opera
+        document.body.scrollTop = 400; // For Safari
+        document.documentElement.scrollTop = 400; // For Chrome, Firefox, IE and Opera
       } catch (error) {
         console.log(error.response, "message error");
       }
     };
 
     fetchData();
-  }, [name, skip, favorites]);
+  }, [name, skip]);
 
   return (
     <main className="characters-main">
@@ -54,13 +64,14 @@ const Charachters = ({ handleClickFavorite, favorites }) => {
           <h1>Enter the Marvel Univers</h1>
         </div>
         <div className="search-bar">
-          <span>Find your favorite heroe {name}</span>
+          <span>Find your favorite heroe</span>
           <div className="input-wrapper">
             <i className="fas fa-search"></i>
             <input
               onChange={(event) => {
                 setName(event.target.value);
-                setSkip("");
+
+                setSkip(1);
               }}
               type="text"
               id="name"
@@ -84,7 +95,6 @@ const Charachters = ({ handleClickFavorite, favorites }) => {
                     <Link
                       className="image-wrapper"
                       to={`/comics/${result._id}`}
-                      // state={{ id: result._id }}
                     >
                       <img
                         src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
@@ -93,13 +103,13 @@ const Charachters = ({ handleClickFavorite, favorites }) => {
                     </Link>
                     <h2>{result.name}</h2>
                     <div className="favorites">
-                      {Object.keys(
-                        localStorageFavorites.characters.length > 0
-                      ) &&
-                      localStorageFavorites.characters.includes(result._id) ? (
+                      {localStorage.length !== 0 &&
+                      localStorage.characterFavorites
+                        .split(",")
+                        .includes(result._id) ? (
                         <i
                           onClick={() => {
-                            handleClickFavorite(
+                            handleUserFavorites(
                               result._id,
                               "remove",
                               "character"
@@ -110,23 +120,30 @@ const Charachters = ({ handleClickFavorite, favorites }) => {
                       ) : (
                         <i
                           onClick={() => {
-                            handleClickFavorite(result._id, "add", "character");
+                            handleUserFavorites(result._id, "add", "character");
                           }}
                           className="far fa-star"
                         ></i>
                       )}
-
                       {display && <span>added to favotites!</span>}
                     </div>
-                    <p>{result.description && result.description}</p>
+                    <p>
+                      {result.description &&
+                        truncateStr(result.description, 150)}
+                    </p>
                   </article>
                 );
               })}
             </section>
-            <Pagination
+            <PaginationAltern
               data={{ ...data }}
+              setData={setData}
+              setIsLoading={setIsLoading}
+              page={page}
+              setPage={setPage}
               nbPages={nbPages}
               setSkip={setSkip}
+              apiUrl={baseUrl}
             />
           </div>
         </div>

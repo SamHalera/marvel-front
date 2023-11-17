@@ -17,6 +17,9 @@ body {
   );
 }
 
+.disabled {
+  color: rgb(74, 74, 74);
+}
 .loader {
   display: flex;
   justify-content: center;
@@ -58,9 +61,15 @@ nav a {
   border-bottom: transparent;
   padding-bottom: 8px;
 }
-nav a:hover {
+nav a:hover,
+a:hover,
+.pagination .prev:hover,
+.pagination .next:hover {
   color: #ed1d24;
   border-bottom: 3px solid #ed1d24;
+}
+a.logo:hover {
+  border: none;
 }
 .overlay {
   width: 100%;
@@ -89,6 +98,11 @@ a {
   margin: 30px;
   gap: 10px;
   flex-wrap: wrap;
+}
+.pagination .prev,
+.pagination .next {
+  font-weight: bold;
+  cursor: pointer;
 }
 .page {
   width: 20px;
@@ -182,6 +196,12 @@ a {
   object-fit: cover;
   transition: all 1s ease-in-out;
 }
+.list .comics-item {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  flex: inherit;
+}
 .characters-main .list .item:hover img {
   transform: scale(1.1);
   opacity: 0.6;
@@ -192,6 +212,9 @@ a {
   height: 450px;
   background-color: #161a3a;
   overflow: hidden;
+}
+.image-wrapper:hover {
+  border: none;
 }
 .favorites {
   z-index: 10;
