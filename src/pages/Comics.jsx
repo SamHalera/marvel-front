@@ -5,12 +5,15 @@ import { useState, useEffect } from "react";
 //components
 import Pagination from "../components/Pagination";
 
-const Comics = () => {
+const Comics = ({ handleClickFavorite, favorites }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(0);
+
+  console.log("localStorage=> ", localStorage);
+  const localStorageFavorites = JSON.parse(localStorage.getItem("favorites"));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +61,26 @@ const Comics = () => {
                 />
                 <h2>{result.title}</h2>
                 <p>{result.description && result.description}</p>
+                <div className="favorites">
+                  {Object.keys(localStorageFavorites.comics.length > 0) &&
+                  localStorageFavorites.comics.includes(result._id) ? (
+                    <i
+                      onClick={() => {
+                        handleClickFavorite(result._id, "remove", "comic");
+                      }}
+                      className="fas fa-star"
+                    ></i>
+                  ) : (
+                    <i
+                      onClick={() => {
+                        handleClickFavorite(result._id, "add", "comic");
+                      }}
+                      className="far fa-star"
+                    ></i>
+                  )}
+
+                  {/* {display && <span>added to favotites!</span>} */}
+                </div>
               </article>
             );
           })}

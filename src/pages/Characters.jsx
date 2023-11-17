@@ -1,30 +1,26 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { set } from "mongoose";
 
 //components
 import Pagination from "../components/Pagination";
 
 //assets
 
-const Charachters = () => {
+const Charachters = ({ handleClickFavorite, favorites }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+
   const [display, setDisplay] = useState(false);
 
   //states for query
   const [name, setName] = useState("");
   const [skip, setSkip] = useState(0);
-  // let valueForNbPages = data.count / data.limit;
+
   const [nbPages, setNbPages] = useState();
 
-  console.log("nb of pages =>", nbPages);
-  console.log("page for query=>", skip);
-  console.log("name =>", name);
-  // console.log("limit =>", limit);
-
+  console.log("localStorage=> ", localStorage);
+  const localStorageFavorites = JSON.parse(localStorage.getItem("favorites"));
   useEffect(() => {
     const fetchData = async () => {
       console.log("INSIDE FETCHDATA");
@@ -34,6 +30,7 @@ const Charachters = () => {
           `http://localhost:3000?name=${name}&skip=${skip}`
           // `http://localhost:3000?skip=${skip}`
         );
+
         console.log("data =>", response.data);
         setData(response.data);
         setNbPages(Math.ceil(response.data.count / 100));
@@ -48,7 +45,7 @@ const Charachters = () => {
     };
 
     fetchData();
-  }, [name, skip]);
+  }, [name, skip, favorites]);
 
   return (
     <main className="characters-main">
@@ -96,25 +93,29 @@ const Charachters = () => {
                     </Link>
                     <h2>{result.name}</h2>
                     <div className="favorites">
-                      {!isFavorite ? (
+                      {Object.keys(
+                        localStorageFavorites.characters.length > 0
+                      ) &&
+                      localStorageFavorites.characters.includes(result._id) ? (
                         <i
                           onClick={() => {
-                            setIsFavorite(!isFavorite);
-                            //   setDisplay(true);
-                            //   setTimeout(() => {
-                            //     setDisplay(false);
-                            //   }, 1000);
+                            handleClickFavorite(
+                              result._id,
+                              "remove",
+                              "character"
+                            );
                           }}
-                          className="far fa-star"
+                          className="fas fa-star"
                         ></i>
                       ) : (
                         <i
                           onClick={() => {
-                            setIsFavorite(!isFavorite);
+                            handleClickFavorite(result._id, "add", "character");
                           }}
-                          className="fas fa-star"
+                          className="far fa-star"
                         ></i>
                       )}
+
                       {display && <span>added to favotites!</span>}
                     </div>
                     <p>{result.description && result.description}</p>

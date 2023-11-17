@@ -1,0 +1,34 @@
+// favourite est un state en array
+
+fonction handleFavorite
+
+je clique sur l'étoile
+
+je clone le tableau favorite
+
+je push l'id du character dans le tableau clone
+
+je set le tableau clone avec la nouvelle valeur du tableau clone en arg
+
+je sors de la fonction
+
+avant le render de App
+
+je déclare une variable str vide
+
+si le tableau favorite n'est pas vide str aura la valeur  favorite.join(",")
+
+je crée un Cokkie avec la valeur de str 
+==> j'obtiens un Cookie en string contenant des ids separés par une virgule
+
+
+
+    /// Page characters
+
+    je recupere la valeur du Cookie
+
+    je la transforme en tableau
+
+    sur chaque character  
+        si l'id du character est inclus dans le tableau
+            j'affiche une étoile remplis
