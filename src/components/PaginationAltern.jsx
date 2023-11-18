@@ -10,8 +10,10 @@ const PaginationAltern = ({
   setPage,
   nbPages,
   apiUrl,
+  token,
 }) => {
-  const handlePagination = async (value) => {
+  const handlePagination = async (value, event) => {
+    event.preventDefault();
     setIsLoading(true);
     if (value <= 1) {
       value = 1;
@@ -19,14 +21,17 @@ const PaginationAltern = ({
       value = nbPages;
     }
     try {
-      const response = await axios.get(`${apiUrl}?skip=${value}`);
-      console.log(`${apiUrl}?skip=${value}`);
+      const response = await axios.get(`${apiUrl}?skip=${value}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       console.log(response.data);
       setData(response.data);
       setPage(value);
       setIsLoading(false);
     } catch (error) {
-      console.log(`${apiUrl}?skip=${value}`);
       console.log(error.response, "message error");
     }
   };
@@ -39,8 +44,8 @@ const PaginationAltern = ({
         ) : (
           <span
             className="next"
-            onClick={() => {
-              handlePagination(page - 1);
+            onClick={(event) => {
+              handlePagination(page - 1, event);
             }}
           >
             prev
@@ -49,8 +54,8 @@ const PaginationAltern = ({
 
         {/* //which value for input ?? */}
         <form
-          onSubmit={() => {
-            handlePagination(page);
+          onSubmit={(event) => {
+            handlePagination(page, event);
           }}
         >
           <input
@@ -73,13 +78,13 @@ const PaginationAltern = ({
         <span>OF</span>
         <span>{nbPages}</span>
 
-        {page === nbPages ? (
+        {page >= nbPages ? (
           <span className="disabled">next</span>
         ) : (
           <span
             className="next"
-            onClick={() => {
-              handlePagination(page + 1);
+            onClick={(event) => {
+              handlePagination(page + 1, event);
             }}
           >
             next

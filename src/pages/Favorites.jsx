@@ -1,17 +1,31 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const Favorites = ({ baseUrl }) => {
+const Favorites = ({
+  baseUrl,
+  displayCharacters,
+  setDisplayCharacters,
+  token,
+  userId,
+  handleRemoveFavorite,
+  addedToFavorites,
+}) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log("displayCharacters=>", displayCharacters);
+  console.log("favorite page:", token);
   useEffect(() => {
     const fetchData = async () => {
       console.log("INSIDE FETCHDATA");
 
       try {
-        const response = await axios.get(`${baseUrl}/favorites`);
+        const response = await axios.get(`${baseUrl}/favorites`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         console.log("data =>", response.data);
         setData(response.data);
@@ -26,30 +40,75 @@ const Favorites = ({ baseUrl }) => {
     };
 
     fetchData();
-  }, []);
-  return isLoading ? (
-    <div className="loader">LOADING</div>
-  ) : (
-    <main className="favorites-main">
-      <h2>My Favorites</h2>
-      <div className="container">
-        <section className="list favorites-list">
-          {data.map((favorite) => {
-            return (
-              <article key={favorite._id} className="item">
-                <h3>{favorite.title || favorite.name}</h3>
-                <div className="image-wrapper">
-                  <img
-                    src={`${favorite.thumbnail.path}.${favorite.thumbnail.extension}`}
-                    alt=""
-                  />
-                </div>
-              </article>
-            );
-          })}
-        </section>
-      </div>
-    </main>
-  );
+  }, [displayCharacters, addedToFavorites]);
+  if (token) {
+    return isLoading ? (
+      <div className="loader">LOADING</div>
+    ) : (
+      <main className="favorites-main">
+        <h2>My Favorites</h2>
+
+        <div className="toggle-favorites">
+          <span
+            onClick={() => {
+              setDisplayCharacters("character");
+            }}
+          >
+            Characters
+          </span>
+          <span
+            onClick={() => {
+              setDisplayCharacters("comic");
+            }}
+          >
+            Comics
+          </span>
+        </div>
+        {data.length === 0 && (
+          <div>
+            <h2>You don't have any favorite yet</h2>
+            <h3>Give a look on these two sections:</h3>
+            <Link to="/">Characters</Link>
+            <Link to="/comics">Comics</Link>
+          </div>
+        )}
+
+        <div className="container">
+          <section className="list favorites-list">
+            {data.map((favorite) => {
+              console.log("favorite.user=>", favorite.user);
+              console.log("userId=>", userId);
+              if (favorite.user === userId) {
+                // displayCharacters === favorite.label &&
+                if (displayCharacters === favorite.label) {
+                  return (
+                    <article key={favorite._id} className="item">
+                      <h3>{favorite.title || favorite.name}</h3>
+                      <div className="image-wrapper">
+                        <img
+                          src={`${favorite.thumbnail.path}.${favorite.thumbnail.extension}`}
+                          alt=""
+                        />
+                      </div>
+                      <div className="favorites">
+                        <i
+                          onClick={() => {
+                            handleRemoveFavorite(favorite._id, "character");
+                          }}
+                          className="fas fa-star"
+                        ></i>
+                      </div>
+                    </article>
+                  );
+                }
+              }
+            })}
+          </section>
+        </div>
+      </main>
+    );
+  } else {
+    return <Navigate to="/" />;
+  }
 };
 export default Favorites;

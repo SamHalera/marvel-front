@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import baseUrl from "../api";
@@ -12,6 +12,7 @@ const Comics = ({
   handleRemoveFavorite,
   truncateStr,
   addedToFavorites,
+  token,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +24,11 @@ const Comics = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/comics?title=${title}`);
+        const response = await axios.get(`${baseUrl}/comics?title=${title}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log("data =>", response.data);
         setData(response.data);
         setNbPages(Math.ceil(response.data.count / 100));
@@ -34,77 +39,84 @@ const Comics = ({
     };
     fetchData();
   }, [title, skip, addedToFavorites]);
-  return isLoading ? (
-    <div className="loader">LOADING</div>
-  ) : (
-    <main className="comics-main">
-      <div className="search-bar">
-        <span>Find your favorite comic {title}</span>
-        <div className="input-wrapper">
-          <i className="fas fa-search"></i>
-          <input
-            onChange={(event) => {
-              setTitle(event.target.value);
-              setSkip("");
-            }}
-            type="text"
-            id="name"
-            value={title}
-          />
-        </div>
-      </div>
-      <div className="container">
-        <div className="list-container">
-          <h2 className="results-title">Results: {data.count}</h2>
-          <section className="list comics-list">
-            {data.results.map((result) => {
-              return (
-                <article key={result._id} className="item comics-item">
-                  <img
-                    src={`${result.thumbnail.path}/standard_fantastic.${result.thumbnail.extension}`}
-                    alt=""
-                  />
-                  <h2>{result.title}</h2>
-                  <p>
-                    {result.description && truncateStr(result.description, 100)}
-                  </p>
-                  <div className="favorites">
-                    {result.isFavorite ? (
-                      <i
-                        onClick={() => {
-                          handleRemoveFavorite(result._id, "comic");
-                        }}
-                        className="fas fa-star"
-                      ></i>
-                    ) : (
-                      <i
-                        onClick={() => {
-                          handleAddFavorite(result._id, "comic");
-                        }}
-                        className="far fa-star"
-                      ></i>
-                    )}
 
-                    {/* {display && <span>added to favotites!</span>} */}
-                  </div>
-                </article>
-              );
-            })}
-          </section>
+  if (!token) {
+    return <Navigate to="/login" />;
+  } else {
+    return isLoading ? (
+      <div className="loader">LOADING</div>
+    ) : (
+      <main className="comics-main">
+        <div className="search-bar">
+          <span>Find your favorite comic {title}</span>
+          <div className="input-wrapper">
+            <i className="fas fa-search"></i>
+            <input
+              onChange={(event) => {
+                setTitle(event.target.value);
+                setSkip("");
+              }}
+              type="text"
+              id="name"
+              value={title}
+            />
+          </div>
         </div>
-      </div>
+        <div className="container">
+          <div className="list-container">
+            <h2 className="results-title">Results: {data.count}</h2>
+            <section className="list comics-list">
+              {data.results.map((result) => {
+                return (
+                  <article key={result._id} className="item comics-item">
+                    <img
+                      src={`${result.thumbnail.path}/standard_fantastic.${result.thumbnail.extension}`}
+                      alt=""
+                    />
+                    <h2>{result.title}</h2>
+                    <p>
+                      {result.description &&
+                        truncateStr(result.description, 100)}
+                    </p>
+                    <div className="favorites">
+                      {result.isFavorite ? (
+                        <i
+                          onClick={() => {
+                            handleRemoveFavorite(result._id, "comic");
+                          }}
+                          className="fas fa-star"
+                        ></i>
+                      ) : (
+                        <i
+                          onClick={() => {
+                            handleAddFavorite(result._id, "comic");
+                          }}
+                          className="far fa-star"
+                        ></i>
+                      )}
 
-      <PaginationAltern
-        data={{ ...data }}
-        setData={setData}
-        setIsLoading={setIsLoading}
-        page={page}
-        setPage={setPage}
-        nbPages={nbPages}
-        setSkip={setSkip}
-        apiUrl={`${baseUrl}/comics`}
-      />
-    </main>
-  );
+                      {/* {display && <span>added to favotites!</span>} */}
+                    </div>
+                  </article>
+                );
+              })}
+            </section>
+          </div>
+        </div>
+
+        <PaginationAltern
+          data={{ ...data }}
+          setData={setData}
+          setIsLoading={setIsLoading}
+          page={page}
+          setPage={setPage}
+          nbPages={nbPages}
+          setSkip={setSkip}
+          apiUrl={`${baseUrl}/comics`}
+          token={token}
+        />
+      </main>
+    );
+  }
 };
 export default Comics;

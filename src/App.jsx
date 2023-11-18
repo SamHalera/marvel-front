@@ -20,25 +20,38 @@ import Login from "./pages/Login";
 
 function App() {
   const [token, setToken] = useState(Cookies.get("token") || null);
+  const [userId, setUserId] = useState(Cookies.get("userId") || null);
 
   const [addedToFavorites, setAddedToFavorites] = useState(false);
 
-  localStorage.clear();
-  console.log("first", token);
+  const [displayCharacters, setDisplayCharacters] = useState("character");
 
   const handleToken = (token) => {
     console.log("Je suis ici");
 
     if (token) {
-      console.log(" token en arg");
+      console.log(" token en arg : ", token);
       Cookies.set("token", token, { expires: 15 });
 
       setToken(token);
     } else {
       console.log("Je suis dans le else");
-      localStorage.removeItem("token");
+      Cookies.remove("token");
       console.log("REMOVE", token);
       setToken(null);
+    }
+  };
+
+  const handleId = (userId) => {
+    console.log("dans le handleId");
+    if (userId) {
+      Cookies.set("userId", userId, { expires: 15 });
+
+      setUserId(userId);
+    } else {
+      Cookies.remove("userId");
+      console.log("REMOVE", userId);
+      setUserId(null);
     }
   };
   const truncateStr = (str, maxLength) => {
@@ -47,22 +60,31 @@ function App() {
 
   const handleAddFavorite = async (id, target) => {
     try {
-      const response = await axios.post(`${baseUrl}/favorites/`, {
-        itemId: id,
-        label: target,
-      });
-      setAddedToFavorites(true);
-      console.log(response.data);
+      console.log("id=>", id);
+      console.log("label=>", target);
+      const response = await axios.post(
+        `${baseUrl}/favorites`,
+        {
+          itemId: id,
+          label: target,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setAddedToFavorites(!addedToFavorites);
+      console.log("response add favorite=>", response.data);
     } catch (error) {
       console.log(error.response, "<== message error");
     }
   };
   const handleRemoveFavorite = async (id, target) => {
     try {
-      const response = await axios.delete(`${baseUrl}/favorites/`, {
-        itemId: id,
-      });
-      setAddedToFavorites(false);
+      const response = await axios.delete(`${baseUrl}/favorites/${id}`);
+      setAddedToFavorites(!addedToFavorites);
       console.log(response.data);
     } catch (error) {
       console.log(error.response, "<== message error");
@@ -72,7 +94,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header />
+        <Header token={token} handleToken={handleToken} />
         <Routes>
           <Route
             path="/"
@@ -82,6 +104,10 @@ function App() {
                 handleRemoveFavorite={handleRemoveFavorite}
                 addedToFavorites={addedToFavorites}
                 truncateStr={truncateStr}
+                token={token}
+                handleToken={handleToken}
+                userId={userId}
+                handleId={handleId}
               />
             }
           ></Route>
@@ -89,6 +115,8 @@ function App() {
             path="/comics"
             element={
               <Comics
+                token={token}
+                userId={userId}
                 handleAddFavorite={handleAddFavorite}
                 handleRemoveFavorite={handleRemoveFavorite}
                 addedToFavorites={addedToFavorites}
@@ -96,19 +124,33 @@ function App() {
               />
             }
           ></Route>
-          <Route path="/comics/:characterId" element={<Character />}></Route>
+          <Route
+            path="/comics/:characterId"
+            element={<Character token={token} />}
+          ></Route>
           <Route path="/character/:id" element={<Character />}></Route>
           <Route
             path="/favorites"
-            element={<Favorites truncateStr={truncateStr} baseUrl={baseUrl} />}
+            element={
+              <Favorites
+                token={token}
+                userId={userId}
+                truncateStr={truncateStr}
+                baseUrl={baseUrl}
+                displayCharacters={displayCharacters}
+                setDisplayCharacters={setDisplayCharacters}
+                addedToFavorites={addedToFavorites}
+                handleRemoveFavorite={handleRemoveFavorite}
+              />
+            }
           ></Route>
           <Route
             path="/signup"
-            element={<Signup handleToken={handleToken} />}
+            element={<Signup handleToken={handleToken} handleId={handleId} />}
           ></Route>
           <Route
             path="/login"
-            element={<Login handleToken={handleToken} />}
+            element={<Login handleToken={handleToken} handleId={handleId} />}
           ></Route>
         </Routes>
       </Router>

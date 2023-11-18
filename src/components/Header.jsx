@@ -1,18 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
-const Header = () => {
+const Header = ({ token, handleToken }) => {
   return (
     <header>
       <Link to="/" className="logo">
         <img src={logo} alt="" />
       </Link>
-      <nav>
-        <Link to="/">Characters</Link>
-        <Link to="/comics">Comics</Link>
-        <Link to="/favorites">Favorites</Link>
-        <Link to={"/signup"}>Signup</Link>
-        <Link to={"/login"}>Login</Link>
-      </nav>
+
+      {token ? (
+        <nav>
+          <button
+            onClick={() => {
+              handleToken(null);
+              <Navigate to="/" />;
+            }}
+            className="btn-logout"
+          >
+            Logout
+          </button>
+          <Link to="/">Characters</Link>
+          <Link to="/comics">Comics</Link>
+          {token && <Link to="/favorites">My Favorites</Link>}
+        </nav>
+      ) : (
+        <nav>
+          {!token && <Link to={"/signup"}>Signup</Link>}
+          {!token && <Link to={"/login"}>Login</Link>}
+        </nav>
+      )}
     </header>
   );
 };

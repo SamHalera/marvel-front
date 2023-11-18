@@ -6,9 +6,10 @@ import Cookies from "js-cookie";
 
 // import spinnerLogin from "../assets/images/spinner-login.gif";
 
-const Form = ({ action, apiURL, handleToken }) => {
+const Form = ({ action, apiURL, handleToken, handleId }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -20,61 +21,87 @@ const Form = ({ action, apiURL, handleToken }) => {
     console.log("Form Submitted...");
 
     try {
-      if (!email || !password) {
+      if (!username || !email || !password) {
         setError(true);
       } else {
         console.log("hello");
 
         const response = await axios.post(`${baseUrl}/${apiURL}`, {
+          username,
           email,
           password,
         });
         console.log("AXIOS SUCCES");
         console.log("user", response.data.token);
         const token = response.data.token;
+        const userId = response.data._id;
 
         // Cookies.set("token", token, { expires: 15 });
 
         handleToken(token);
+        handleId(userId);
+        setEmail("");
+        setPassword;
+        setUsername("");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <form
-      action=""
-      onSubmit={(event) => {
-        handleSubmit(event);
-      }}
-    >
-      <h1>{action === "signup" ? "S'inscrire" : "Se connecter"}</h1>
-
-      {!email && error && <p className="danger">Ce champs est obligatoire</p>}
-      <input
-        onChange={(event) => {
-          setEmail(event.target.value);
+    <main>
+      <form
+        action=""
+        onSubmit={(event) => {
+          handleSubmit(event);
         }}
-        type="email"
-        id="email"
-        placeholder="Votre adresse email"
-        value={email}
-      />
+      >
+        <h1>{action === "signup" ? "Sign up" : "Log in"}</h1>
 
-      {!password && error && (
-        <p className="danger">Ce champs est obligatoire</p>
-      )}
-      <input
-        onChange={(event) => {
-          setPassword(event.target.value);
-        }}
-        type="password"
-        id="password"
-        placeholder="Votre mot de passe"
-        value={password}
-      />
-      <button type="submit">Signup</button>
-    </form>
+        {!username && error && <p className="danger">This field is required</p>}
+        <input
+          onChange={(event) => {
+            setUsername(event.target.value);
+          }}
+          type="text"
+          id="username"
+          placeholder="Username"
+          value={username}
+        />
+        {!email && error && <p className="danger">This field is required</p>}
+        <input
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
+          type="email"
+          id="email"
+          placeholder="Email address"
+          value={email}
+        />
+
+        {!password && error && <p className="danger">This field is required</p>}
+        <input
+          onChange={(event) => {
+            setPassword(event.target.value);
+          }}
+          type="password"
+          id="password"
+          placeholder="Password"
+          value={password}
+        />
+        <button type="submit">
+          {action === "signup" ? "Sign up" : "Log in"}
+        </button>
+      </form>
+      <div className="boutons">
+        {action === "signup" ? (
+          <Link to="/login">Already an account? Log in</Link>
+        ) : (
+          <Link to="/signup">Not a member yet? Sign up for free</Link>
+        )}
+      </div>
+    </main>
   );
 };
 
