@@ -10,12 +10,10 @@ import PaginationAltern from "../components/PaginationAltern";
 //assets
 
 const Charachters = ({
-  handleClickFavorite,
-  favorites,
-  characterFavorites,
-  handleUserFavorites,
-  storageHeroFavorites,
-  setStorageHeroFavorites,
+  handleAddFavorite,
+  handleRemoveFavorite,
+  addedToFavorites,
+
   truncateStr,
 }) => {
   const [data, setData] = useState({});
@@ -29,8 +27,6 @@ const Charachters = ({
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
 
-  console.log("localStorage from setLocalStorage=> ", localStorage);
-
   useEffect(() => {
     const fetchData = async () => {
       console.log("INSIDE FETCHDATA");
@@ -41,7 +37,7 @@ const Charachters = ({
           // `http://localhost:3000?skip=${skip}`
         );
 
-        // console.log("data =>", response.data);
+        console.log("data =>", response.data);
         setData(response.data);
         setNbPages(Math.ceil(response.data.count / 100));
 
@@ -55,7 +51,7 @@ const Charachters = ({
     };
 
     fetchData();
-  }, [name, skip]);
+  }, [name, skip, addedToFavorites]);
 
   return (
     <main className="characters-main">
@@ -103,28 +99,22 @@ const Charachters = ({
                     </Link>
                     <h2>{result.name}</h2>
                     <div className="favorites">
-                      {localStorage.length !== 0 &&
-                      localStorage.characterFavorites
-                        .split(",")
-                        .includes(result._id) ? (
+                      {result.isFavorite ? (
                         <i
                           onClick={() => {
-                            handleUserFavorites(
-                              result._id,
-                              "remove",
-                              "character"
-                            );
+                            handleRemoveFavorite(result._id, "character");
                           }}
                           className="fas fa-star"
                         ></i>
                       ) : (
                         <i
                           onClick={() => {
-                            handleUserFavorites(result._id, "add", "character");
+                            handleAddFavorite(result._id, "character");
                           }}
                           className="far fa-star"
                         ></i>
                       )}
+
                       {display && <span>added to favotites!</span>}
                     </div>
                     <p>

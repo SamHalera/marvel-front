@@ -255,3 +255,9 @@ a {
 
     transform: perspective(100px) rotate3d(0,22,-1,13deg);
 */
+
+/*=====FORM=======*/
+
+main.form-container {
+  height: 100vh;
+}

@@ -8,10 +8,10 @@ import baseUrl from "../api";
 import PaginationAltern from "../components/PaginationAltern";
 
 const Comics = ({
-  handleUserFavorites,
-  setStorageComicFavorites,
-  storageComicFavorites,
+  handleAddFavorite,
+  handleRemoveFavorite,
   truncateStr,
+  addedToFavorites,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -19,8 +19,6 @@ const Comics = ({
   const [page, setPage] = useState(1);
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
-
-  console.log("localStorage from setLocalStorage=> ", localStorage);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +33,7 @@ const Comics = ({
       }
     };
     fetchData();
-  }, [title, skip]);
+  }, [title, skip, addedToFavorites]);
   return isLoading ? (
     <div className="loader">LOADING</div>
   ) : (
@@ -71,20 +69,17 @@ const Comics = ({
                     {result.description && truncateStr(result.description, 100)}
                   </p>
                   <div className="favorites">
-                    {localStorage.length !== 0 &&
-                    localStorage.comicsFavorites
-                      .split(",")
-                      .includes(result._id) ? (
+                    {result.isFavorite ? (
                       <i
                         onClick={() => {
-                          handleUserFavorites(result._id, "remove", "comic");
+                          handleRemoveFavorite(result._id, "comic");
                         }}
                         className="fas fa-star"
                       ></i>
                     ) : (
                       <i
                         onClick={() => {
-                          handleUserFavorites(result._id, "add", "comic");
+                          handleAddFavorite(result._id, "comic");
                         }}
                         className="far fa-star"
                       ></i>
