@@ -10,42 +10,53 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(false);
+    setErrorMessage("");
 
     console.log("Form Submitted...");
 
     try {
-      if (!username || !email || !password) {
-        setError(true);
-      } else {
-        console.log("hello");
+      console.log("hello");
 
-        const response = await axios.post(`${baseUrl}/${apiURL}`, {
-          username,
-          email,
-          password,
-        });
-        console.log("AXIOS SUCCES");
-        console.log("user", response.data.token);
-        const token = response.data.token;
-        const userId = response.data._id;
-        const emailCookie = response.data.email;
+      const response = await axios.post(`${baseUrl}/${apiURL}`, {
+        username,
+        email,
+        password,
+      });
+      console.log("AXIOS SUCCES");
+      console.log("user", response.data.token);
+      const token = response.data.token;
+      const userId = response.data._id;
+      const emailCookie = response.data.email;
 
-        handleToken(token);
-        handleId(userId);
-        handleEmailCookie(emailCookie);
-        setEmail("");
-        setPassword("");
-        setUsername("");
-        navigate("/");
-      }
+      handleToken(token);
+      handleId(userId);
+      handleEmailCookie(emailCookie);
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log(error.response.status);
+      setError(true);
+
+      if (error.response.data.message === "All fields are required!") {
+        // Je met à jour mon state errorMessage
+        setErrorMessage("Please fill in all fields");
+        console.log("ici");
+      } else if (error.response.data.message === "This email already exists!") {
+        setErrorMessage(
+          "This email already has an account, please use another one :)"
+        );
+      } else if (error.response.status === 401) {
+        setErrorMessage("Your credentials are not valid");
+      }
     }
   };
   return (
@@ -57,8 +68,8 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
         }}
       >
         <h2>{action === "signup" ? "Sign up" : "Log in"}</h2>
+        {error && <p className="red">{errorMessage}</p>}
 
-        {!username && error && <p className="danger">This field is required</p>}
         <input
           onChange={(event) => {
             setUsername(event.target.value);
@@ -68,7 +79,7 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
           placeholder="Username"
           value={username}
         />
-        {!email && error && <p className="danger">This field is required</p>}
+
         <input
           onChange={(event) => {
             setEmail(event.target.value);
@@ -79,7 +90,6 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
           value={email}
         />
 
-        {!password && error && <p className="danger">This field is required</p>}
         <input
           onChange={(event) => {
             setPassword(event.target.value);

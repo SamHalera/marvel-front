@@ -92,6 +92,7 @@ function App() {
         }
       );
       setAddedToFavorites(!addedToFavorites);
+
       console.log("response add favorite=>", response.data);
     } catch (error) {
       console.log(error.response, "<== message error");
