@@ -293,6 +293,7 @@ a {
 /*=====ONE-CHARACTER=======*/
 .one-character-main {
   height: 100vh;
+  background-color: #202020;
 }
 .character-wrapper {
   margin-top: 40px;
