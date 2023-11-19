@@ -293,7 +293,6 @@ a {
 /*=====ONE-CHARACTER=======*/
 .one-character-main {
   height: 100vh;
-  background-color: #202020;
 }
 .character-wrapper {
   margin-top: 40px;
@@ -678,6 +677,10 @@ main.form-container .overlay {
   }
   .presentation h1 {
     font-weight: inherit;
+  }
+  .one-character-main {
+    height: auto;
+    background-color: #202020;
   }
 }
 /* small devices such as tablets (485px and up) */
