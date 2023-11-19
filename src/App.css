@@ -586,6 +586,14 @@ main.form-container .overlay {
     background-color: #161a3a;
     overflow: hidden;
   }
+  .character-wrapper .character {
+    flex-direction: column;
+  }
+  .info-character img {
+    width: 250px;
+    height: 250px;
+    object-position: center;
+  }
 }
 
 @media only screen and (max-width: 800px) {
@@ -715,6 +723,9 @@ main.form-container .overlay {
   .list .item {
     flex: 1;
     width: 50%;
+  }
+  .list-of-comics {
+    justify-content: center;
   }
 }
 /* Small devices such as large phones (640px and up) */
