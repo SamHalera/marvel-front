@@ -15,25 +15,16 @@ const Favorites = ({
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("displayCharacters=>", displayCharacters);
-  console.log("favorite page:", token);
-
   useEffect(() => {
     const fetchData = async () => {
-      console.log("INSIDE FETCHDATA");
-
       try {
         const response = await axios.get(
           `${baseUrl}/favorites?email=${emailCookie}`
         );
 
-        console.log("data =>", response.data);
         setData(response.data);
 
         setIsLoading(false);
-        //when data are created we scroll smoothly to the div of list
-        // document.body.scrollTop = 400; // For Safari
-        // document.documentElement.scrollTop = 400; // For Chrome, Firefox, IE and Opera
       } catch (error) {
         console.log(error.response, "message error");
       }

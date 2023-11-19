@@ -17,6 +17,7 @@ import Comics from "./pages/Comics";
 import Favorites from "./pages/Favorites";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(Cookies.get("token") || null);
@@ -28,45 +29,36 @@ function App() {
   const [displayCharacters, setDisplayCharacters] = useState("character");
 
   const handleToken = (token) => {
-    console.log("Je suis ici");
-
     if (token) {
-      console.log(" token en arg : ", token);
       Cookies.set("token", token, { expires: 15 });
 
       setToken(token);
     } else {
-      console.log("Je suis dans le else");
       Cookies.remove("token");
-      console.log("REMOVE", token);
+
       setToken(null);
     }
   };
   const handleEmailCookie = (email) => {
-    console.log("Je suis ici email");
-
     if (email) {
-      console.log(" token en arg : ", email);
       Cookies.set("email", email, { expires: 15 });
 
       setEmailCookie(email);
     } else {
-      console.log("Je suis dans le else");
       Cookies.remove("email");
-      console.log("REMOVE", email);
+
       setEmailCookie(null);
     }
   };
 
   const handleId = (userId) => {
-    console.log("dans le handleId");
     if (userId) {
       Cookies.set("userId", userId, { expires: 15 });
 
       setUserId(userId);
     } else {
       Cookies.remove("userId");
-      console.log("REMOVE", userId);
+
       setUserId(null);
     }
   };
@@ -76,8 +68,6 @@ function App() {
 
   const handleAddFavorite = async (id, target) => {
     try {
-      console.log("id=>", id);
-      console.log("label=>", target);
       const response = await axios.post(
         `${baseUrl}/favorites`,
         {
@@ -92,8 +82,6 @@ function App() {
         }
       );
       setAddedToFavorites(!addedToFavorites);
-
-      console.log("response add favorite=>", response.data);
     } catch (error) {
       console.log(error.response, "<== message error");
     }
@@ -102,12 +90,11 @@ function App() {
     try {
       const response = await axios.delete(`${baseUrl}/favorites/${id}`);
       setAddedToFavorites(!addedToFavorites);
-      console.log(response.data);
     } catch (error) {
       console.log(error.response, "<== message error");
     }
   };
-  console.log("second", token);
+
   return (
     <>
       <Router>
@@ -191,6 +178,7 @@ function App() {
             }
           ></Route>
         </Routes>
+        <Footer />
       </Router>
     </>
   );

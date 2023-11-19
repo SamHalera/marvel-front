@@ -28,7 +28,7 @@ const Comics = ({
         const response = await axios.get(
           `${baseUrl}/comics?title=${title}&email=${emailCookie}`
         );
-        console.log("data =>", response.data);
+
         setData(response.data);
         setNbPages(Math.ceil(response.data.count / 100));
         setIsLoading(false);
@@ -92,8 +92,6 @@ const Comics = ({
                           className="far fa-star"
                         ></i>
                       )}
-
-                      {/* {display && <span>added to favotites!</span>} */}
                     </div>
                   </article>
                 );

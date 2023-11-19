@@ -26,18 +26,13 @@ const Characters = ({
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
 
-  console.log("token=>", token);
-
   useEffect(() => {
     const fetchData = async () => {
-      console.log("INSIDE FETCHDATA");
-
       try {
         const response = await axios.get(
           `${baseUrl}?name=${name}&email=${emailCookie}`
         );
 
-        console.log("data =>", response.data);
         setData(response.data);
         setNbPages(Math.ceil(response.data.count / 100));
 
@@ -50,9 +45,7 @@ const Characters = ({
     fetchData();
   }, [name, skip, addedToFavorites]);
 
-  console.log("tok", token);
   if (!token) {
-    console.log("no token");
     return <Navigate to="/signup" />;
   } else {
     return (

@@ -11,7 +11,7 @@ const Character = (token) => {
   const id = params.characterId;
   // const location = useLocation();
   // const { id } = location.state;
-  console.log("data=>", data);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

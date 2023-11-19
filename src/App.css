@@ -41,7 +41,22 @@ body {
   margin: 0 auto;
   padding: 40px 100px;
 }
-
+footer {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  background-image: linear-gradient(
+    to right top,
+    #161a3a,
+    #13162f,
+    #111224,
+    #0d0d1a,
+    #06060e
+  );
+  color: white;
+}
 header {
   width: 100%;
   display: flex;
@@ -407,7 +422,7 @@ a {
 
 main.form-container {
   height: auto;
-  background-image: url("./assets/images/poster.png");
+  background-image: url("./assets/images/poster-min.png");
   /* background-image: url("./assets/images/bg-login.jpg"); */
 }
 main.form-container .overlay {

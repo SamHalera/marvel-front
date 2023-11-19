@@ -19,18 +19,13 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
     setError(false);
     setErrorMessage("");
 
-    console.log("Form Submitted...");
-
     try {
-      console.log("hello");
-
       const response = await axios.post(`${baseUrl}/${apiURL}`, {
         username,
         email,
         password,
       });
-      console.log("AXIOS SUCCES");
-      console.log("user", response.data.token);
+
       const token = response.data.token;
       const userId = response.data._id;
       const emailCookie = response.data.email;
@@ -49,7 +44,6 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
       if (error.response.data.message === "All fields are required!") {
         // Je met à jour mon state errorMessage
         setErrorMessage("Please fill in all fields");
-        console.log("ici");
       } else if (error.response.data.message === "This email already exists!") {
         setErrorMessage(
           "This email already has an account, please use another one :)"
