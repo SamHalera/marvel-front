@@ -49,7 +49,6 @@ const Comics = ({
         <div className="search-bar">
           <span>Find your favorite comic {title}</span>
           <div className="input-wrapper">
-            <i className="fas fa-search"></i>
             <input
               onChange={(event) => {
                 setTitle(event.target.value);

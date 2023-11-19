@@ -49,14 +49,14 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
     }
   };
   return (
-    <main>
+    <div className="form-wrapper">
       <form
         action=""
         onSubmit={(event) => {
           handleSubmit(event);
         }}
       >
-        <h1>{action === "signup" ? "Sign up" : "Log in"}</h1>
+        <h2>{action === "signup" ? "Sign up" : "Log in"}</h2>
 
         {!username && error && <p className="danger">This field is required</p>}
         <input
@@ -100,7 +100,7 @@ const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
           <Link to="/signup">Not a member yet? Sign up for free</Link>
         )}
       </div>
-    </main>
+    </div>
   );
 };
 

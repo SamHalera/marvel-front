@@ -58,25 +58,7 @@ const Characters = ({
     return (
       <main className="characters-main">
         <section className="bg-img bg-settings">
-          <div className="overlay">
-            <h1>Enter the Marvel Univers</h1>
-          </div>
-          <div className="search-bar">
-            <span>Find your favorite heroe</span>
-            <div className="input-wrapper">
-              <i className="fas fa-search"></i>
-              <input
-                onChange={(event) => {
-                  setName(event.target.value);
-
-                  setSkip(1);
-                }}
-                type="text"
-                id="name"
-                value={name}
-              />
-            </div>
-          </div>
+          <div className="overlay"></div>
         </section>
 
         {isLoading ? (
@@ -84,6 +66,21 @@ const Characters = ({
         ) : (
           <div className="container">
             <div className="list-container">
+              <div className="search-bar">
+                <span>Find your favorite heroe</span>
+                <div className="input-wrapper">
+                  <input
+                    onChange={(event) => {
+                      setName(event.target.value);
+
+                      setSkip(1);
+                    }}
+                    type="text"
+                    id="name"
+                    value={name}
+                  />
+                </div>
+              </div>
               <h2 className="results-title">Results: {data.count}</h2>
 
               <section className="list characters-list">
@@ -119,7 +116,7 @@ const Characters = ({
                       </div>
                       <p>
                         {result.description &&
-                          truncateStr(result.description, 150)}
+                          truncateStr(result.description, 100)}
                       </p>
                     </article>
                   );

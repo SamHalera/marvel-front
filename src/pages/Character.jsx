@@ -43,13 +43,18 @@ const Character = (token) => {
                   alt=""
                 />
                 <h2>{data.name}</h2>
+                <p>{data.description}</p>
+                <p className="">
+                  You can find {data.name} in these beside {data.comics.length}{" "}
+                  comics
+                </p>
               </div>
               <div className="list-of-comics">
                 {data.comics.map((comic) => {
                   return (
                     <article key={comic._id}>
                       <img
-                        src={`${comic.thumbnail.path}/standard_medium.${data.thumbnail.extension}`}
+                        src={`${comic.thumbnail.path}/standard_fantastic.${data.thumbnail.extension}`}
                         alt=""
                       />
                       <h3>{comic.title}</h3>
