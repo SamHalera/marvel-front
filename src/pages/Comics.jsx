@@ -21,24 +21,26 @@ const Comics = ({
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/comics?title=${title}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log("data =>", response.data);
-        setData(response.data);
-        setNbPages(Math.ceil(response.data.count / 100));
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.response);
-      }
-    };
-    fetchData();
-  }, [title, skip, addedToFavorites]);
+  if (token) {
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${baseUrl}/comics?title=${title}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log("data =>", response.data);
+          setData(response.data);
+          setNbPages(Math.ceil(response.data.count / 100));
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error.response);
+        }
+      };
+      fetchData();
+    }, [title, skip, addedToFavorites]);
+  }
 
   if (!token) {
     return <Navigate to="/login" />;

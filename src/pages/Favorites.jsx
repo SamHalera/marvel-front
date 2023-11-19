@@ -16,6 +16,7 @@ const Favorites = ({
 
   console.log("displayCharacters=>", displayCharacters);
   console.log("favorite page:", token);
+
   useEffect(() => {
     const fetchData = async () => {
       console.log("INSIDE FETCHDATA");

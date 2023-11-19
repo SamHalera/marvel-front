@@ -1,18 +1,39 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import logo from "../assets/images/logo.svg";
-const Header = ({ token, handleToken }) => {
+const Header = ({ token, handleToken, setToken, setUserId }) => {
+  const navigate = useNavigate();
+
   return (
     <header>
-      <Link to="/" className="logo">
+      {/* <Link to="/" className="logo">
         <img src={logo} alt="" />
-      </Link>
+      </Link> */}
+
+      <img
+        onClick={() => {
+          if (!token) {
+            navigate("/login");
+          } else {
+            navigate("/login");
+          }
+        }}
+        className="logo"
+        src={logo}
+        alt=""
+      />
 
       {token ? (
         <nav>
           <button
             onClick={() => {
-              handleToken(null);
-              <Navigate to="/" />;
+              Cookies.remove("token");
+              Cookies.remove("userId");
+              setToken(null);
+              setUserId(null);
+              // handleToken(null);
+              // handleId(null);
+              navigate("/login");
             }}
             className="btn-logout"
           >
@@ -24,8 +45,8 @@ const Header = ({ token, handleToken }) => {
         </nav>
       ) : (
         <nav>
-          {!token && <Link to={"/signup"}>Signup</Link>}
-          {!token && <Link to={"/login"}>Login</Link>}
+          <Link to={"/signup"}>Signup</Link>
+          <Link to={"/login"}>Login</Link>
         </nav>
       )}
     </header>

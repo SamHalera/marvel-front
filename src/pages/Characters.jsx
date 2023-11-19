@@ -11,19 +11,15 @@ import Form from "../components/Form";
 
 //assets
 
-const Charachters = ({
+const Characters = ({
   handleAddFavorite,
   handleRemoveFavorite,
   addedToFavorites,
   token,
-  handleToken,
-  handleId,
   truncateStr,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
-  const [display, setDisplay] = useState(false);
 
   //states for query
   const [name, setName] = useState("");
@@ -33,33 +29,36 @@ const Charachters = ({
 
   console.log("token=>", token);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("INSIDE FETCHDATA");
+  if (token) {
+    useEffect(() => {
+      const fetchData = async () => {
+        console.log("INSIDE FETCHDATA");
 
-      try {
-        const response = await axios.get(`${baseUrl}?name=${name}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        try {
+          const response = await axios.get(`${baseUrl}?name=${name}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        console.log("data =>", response.data);
-        setData(response.data);
-        setNbPages(Math.ceil(response.data.count / 100));
+          console.log("data =>", response.data);
+          setData(response.data);
+          setNbPages(Math.ceil(response.data.count / 100));
 
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.response, "message error");
-      }
-    };
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error.response, "message error");
+        }
+      };
 
-    fetchData();
-  }, [name, skip, addedToFavorites]);
+      fetchData();
+    }, [name, skip, addedToFavorites]);
+  }
 
   console.log("tok", token);
   if (!token) {
-    return <Navigate to="/login" />;
+    console.log("no token");
+    return <Navigate to="/signup" />;
   } else {
     return (
       <main className="characters-main">
@@ -122,8 +121,6 @@ const Charachters = ({
                             className="far fa-star"
                           ></i>
                         )}
-
-                        {display && <span>added to favotites!</span>}
                       </div>
                       <p>
                         {result.description &&
@@ -153,4 +150,4 @@ const Charachters = ({
     );
   }
 };
-export default Charachters;
+export default Characters;

@@ -6,7 +6,7 @@ import axios from "axios";
 import baseUrl from "./api";
 //assets
 import "./App.css";
-import spinner from "./assets/images/spinner.gif";
+
 //Components
 import Header from "./components/Header";
 
@@ -94,7 +94,13 @@ function App() {
   return (
     <>
       <Router>
-        <Header token={token} handleToken={handleToken} />
+        <Header
+          token={token}
+          handleToken={handleToken}
+          handleId={handleId}
+          setToken={setToken}
+          setUserId={setUserId}
+        />
         <Routes>
           <Route
             path="/"
