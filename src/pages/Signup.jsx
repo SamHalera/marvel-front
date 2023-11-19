@@ -1,7 +1,7 @@
 //Components
 import Form from "../components/Form";
 
-const Signup = ({ handleToken, handleId }) => {
+const Signup = ({ handleToken, handleId, handleEmailCookie }) => {
   return (
     <main className="form-container">
       <div className="container">
@@ -10,6 +10,7 @@ const Signup = ({ handleToken, handleId }) => {
           apiURL="user/signup"
           handleToken={handleToken}
           handleId={handleId}
+          handleEmailCookie={handleEmailCookie}
         />
       </div>
     </main>

@@ -1,15 +1,9 @@
-import {
-  Link,
-  useNavigate,
-  useLocation,
-  useParams,
-  Navigate,
-} from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import baseUrl from "../api";
 
-const Character = () => {
+const Character = (token) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 

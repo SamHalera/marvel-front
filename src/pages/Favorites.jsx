@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -8,6 +8,7 @@ const Favorites = ({
   setDisplayCharacters,
   token,
   userId,
+  emailCookie,
   handleRemoveFavorite,
   addedToFavorites,
 }) => {
@@ -22,11 +23,9 @@ const Favorites = ({
       console.log("INSIDE FETCHDATA");
 
       try {
-        const response = await axios.get(`${baseUrl}/favorites`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${baseUrl}/favorites?email=${emailCookie}`
+        );
 
         console.log("data =>", response.data);
         setData(response.data);
@@ -103,6 +102,7 @@ const Favorites = ({
                   );
                 }
               }
+              return null;
             })}
           </section>
         </div>

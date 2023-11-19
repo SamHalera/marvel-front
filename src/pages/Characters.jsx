@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import baseUrl from "../api";
@@ -6,8 +6,6 @@ import baseUrl from "../api";
 //components
 // import Pagination from "../components/Pagination";
 import PaginationAltern from "../components/PaginationAltern";
-import Login from "./Login";
-import Form from "../components/Form";
 
 //assets
 
@@ -17,6 +15,7 @@ const Characters = ({
   addedToFavorites,
   token,
   truncateStr,
+  emailCookie,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -28,32 +27,28 @@ const Characters = ({
   const [skip, setSkip] = useState(1);
 
   console.log("token=>", token);
-  const navigate = useNavigate();
-  if (token) {
-    useEffect(() => {
-      const fetchData = async () => {
-        console.log("INSIDE FETCHDATA");
 
-        try {
-          const response = await axios.get(`${baseUrl}?name=${name}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("INSIDE FETCHDATA");
 
-          console.log("data =>", response.data);
-          setData(response.data);
-          setNbPages(Math.ceil(response.data.count / 100));
+      try {
+        const response = await axios.get(
+          `${baseUrl}?name=${name}&email=${emailCookie}`
+        );
 
-          setIsLoading(false);
-        } catch (error) {
-          console.log(error.response, "message error");
-        }
-      };
+        console.log("data =>", response.data);
+        setData(response.data);
+        setNbPages(Math.ceil(response.data.count / 100));
 
-      fetchData();
-    }, [name, skip, addedToFavorites]);
-  }
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error.response, "message error");
+      }
+    };
+
+    fetchData();
+  }, [name, skip, addedToFavorites]);
 
   console.log("tok", token);
   if (!token) {
@@ -92,7 +87,7 @@ const Characters = ({
               <h2 className="results-title">Results: {data.count}</h2>
 
               <section className="list characters-list">
-                {data.results.map((result, index) => {
+                {data.results.map((result) => {
                   return (
                     <article key={result._id} className="item character-item">
                       <Link

@@ -1,6 +1,6 @@
 import Form from "../components/Form";
 
-const Login = ({ handleToken, handleId }) => {
+const Login = ({ handleToken, handleId, handleEmailCookie }) => {
   return (
     <main className="form-container">
       <div className="container">
@@ -9,6 +9,7 @@ const Login = ({ handleToken, handleId }) => {
           apiURL="user/login"
           handleToken={handleToken}
           handleId={handleId}
+          handleEmailCookie={handleEmailCookie}
         />
       </div>
     </main>

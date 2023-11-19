@@ -2,11 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseUrl from "../api";
-import Cookies from "js-cookie";
 
 // import spinnerLogin from "../assets/images/spinner-login.gif";
 
-const Form = ({ action, apiURL, handleToken, handleId }) => {
+const Form = ({ action, apiURL, handleToken, handleId, handleEmailCookie }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -35,13 +34,13 @@ const Form = ({ action, apiURL, handleToken, handleId }) => {
         console.log("user", response.data.token);
         const token = response.data.token;
         const userId = response.data._id;
-
-        // Cookies.set("token", token, { expires: 15 });
+        const emailCookie = response.data.email;
 
         handleToken(token);
         handleId(userId);
+        handleEmailCookie(emailCookie);
         setEmail("");
-        setPassword;
+        setPassword("");
         setUsername("");
         navigate("/");
       }

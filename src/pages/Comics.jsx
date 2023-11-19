@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import baseUrl from "../api";
@@ -13,6 +13,7 @@ const Comics = ({
   truncateStr,
   addedToFavorites,
   token,
+  emailCookie,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -21,26 +22,22 @@ const Comics = ({
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
 
-  if (token) {
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`${baseUrl}/comics?title=${title}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          console.log("data =>", response.data);
-          setData(response.data);
-          setNbPages(Math.ceil(response.data.count / 100));
-          setIsLoading(false);
-        } catch (error) {
-          console.log(error.response);
-        }
-      };
-      fetchData();
-    }, [title, skip, addedToFavorites]);
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${baseUrl}/comics?title=${title}&email=${emailCookie}`
+        );
+        console.log("data =>", response.data);
+        setData(response.data);
+        setNbPages(Math.ceil(response.data.count / 100));
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
+    fetchData();
+  }, [title, skip, addedToFavorites]);
 
   if (!token) {
     return <Navigate to="/login" />;

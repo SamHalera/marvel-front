@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -21,6 +21,7 @@ import Login from "./pages/Login";
 function App() {
   const [token, setToken] = useState(Cookies.get("token") || null);
   const [userId, setUserId] = useState(Cookies.get("userId") || null);
+  const [emailCookie, setEmailCookie] = useState(Cookies.get("email") || null);
 
   const [addedToFavorites, setAddedToFavorites] = useState(false);
 
@@ -39,6 +40,21 @@ function App() {
       Cookies.remove("token");
       console.log("REMOVE", token);
       setToken(null);
+    }
+  };
+  const handleEmailCookie = (email) => {
+    console.log("Je suis ici email");
+
+    if (email) {
+      console.log(" token en arg : ", email);
+      Cookies.set("email", email, { expires: 15 });
+
+      setEmailCookie(email);
+    } else {
+      console.log("Je suis dans le else");
+      Cookies.remove("email");
+      console.log("REMOVE", email);
+      setEmailCookie(null);
     }
   };
 
@@ -114,6 +130,7 @@ function App() {
                 handleToken={handleToken}
                 userId={userId}
                 handleId={handleId}
+                emailCookie={emailCookie}
               />
             }
           ></Route>
@@ -123,6 +140,7 @@ function App() {
               <Comics
                 token={token}
                 userId={userId}
+                emailCookie={emailCookie}
                 handleAddFavorite={handleAddFavorite}
                 handleRemoveFavorite={handleRemoveFavorite}
                 addedToFavorites={addedToFavorites}
@@ -132,7 +150,7 @@ function App() {
           ></Route>
           <Route
             path="/comics/:characterId"
-            element={<Character token={token} />}
+            element={<Character token={token} emailCookie={emailCookie} />}
           ></Route>
           <Route path="/character/:id" element={<Character />}></Route>
           <Route
@@ -141,6 +159,7 @@ function App() {
               <Favorites
                 token={token}
                 userId={userId}
+                emailCookie={emailCookie}
                 truncateStr={truncateStr}
                 baseUrl={baseUrl}
                 displayCharacters={displayCharacters}
@@ -152,11 +171,23 @@ function App() {
           ></Route>
           <Route
             path="/signup"
-            element={<Signup handleToken={handleToken} handleId={handleId} />}
+            element={
+              <Signup
+                handleToken={handleToken}
+                handleId={handleId}
+                handleEmailCookie={handleEmailCookie}
+              />
+            }
           ></Route>
           <Route
             path="/login"
-            element={<Login handleToken={handleToken} handleId={handleId} />}
+            element={
+              <Login
+                handleToken={handleToken}
+                handleId={handleId}
+                handleEmailCookie={handleEmailCookie}
+              />
+            }
           ></Route>
         </Routes>
       </Router>
