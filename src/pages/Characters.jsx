@@ -55,7 +55,7 @@ const Characters = ({
         </section>
 
         {isLoading ? (
-          <div className="loader">LOADING</div>
+          <div className="loader">LOADING...</div>
         ) : (
           <div className="container">
             <div className="list-container">

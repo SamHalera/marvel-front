@@ -17,7 +17,7 @@ const Login = ({ handleToken, handleId, handleEmailCookie }) => {
               Welcome to the
               <span className="red"> Marvelous World of Marvel</span>
             </h1>
-            <h2>Discover all the hereos and their Comics Sagas</h2>
+            <h2>Discover all the heroes and their Comics Sagas</h2>
           </div>
         </div>
       </div>

@@ -37,6 +37,9 @@ body {
   color: white;
   height: 100vh;
 }
+.loadrer .spinner {
+  width: 50px;
+}
 .container {
   max-width: 100%;
   display: flex;
