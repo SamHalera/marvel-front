@@ -28,8 +28,10 @@ const Character = (token) => {
     fetchData();
   }, []);
   if (!token) {
+    console.log("NO TOKEN");
     return <Navigate to="/login" />;
   } else {
+    console.log("TOKEN YES");
     return isLoading ? (
       <div className="loader">LOADING</div>
     ) : (

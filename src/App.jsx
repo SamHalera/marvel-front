@@ -45,6 +45,7 @@ function App() {
 
       setEmailCookie(email);
     } else {
+      console.log("JE REMOVE");
       Cookies.remove("email");
 
       setEmailCookie(null);

@@ -46,7 +46,7 @@ const Characters = ({
   }, [name, skip, addedToFavorites]);
 
   if (!token) {
-    return <Navigate to="/signup" />;
+    return <Navigate to="/login" />;
   } else {
     return (
       <main className="characters-main">

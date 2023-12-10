@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import logo from "../assets/images/logo.svg";
 import { useState } from "react";
@@ -74,10 +74,14 @@ const Header = ({ token, handleToken, setToken, setUserId }) => {
               </span>
               <button
                 onClick={() => {
+                  Cookies.remove("email");
                   Cookies.remove("token");
                   Cookies.remove("userId");
-                  setToken(null);
-                  setUserId(null);
+                  console.log("removing ?");
+
+                  // setToken(null);
+                  // setUserId(null);
+                  // setEmailCookie(null);
                   setDisplayMenu(false);
                   // handleToken(null);
                   // handleId(null);
