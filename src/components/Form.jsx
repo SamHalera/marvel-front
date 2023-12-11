@@ -47,7 +47,7 @@ const Form = ({ action, apiURL, createUserCookies }) => {
         setErrorMessage("Please fill in all fields");
       } else if (error.response.data.message === "This email already exists!") {
         setErrorMessage(
-          "This email already has an account, please use another one :)"
+          "This email already has an account, please use another one :)",
         );
       } else if (error.response.status === 401) {
         setErrorMessage("Your credentials are not valid");
@@ -55,14 +55,17 @@ const Form = ({ action, apiURL, createUserCookies }) => {
     }
   };
   return (
-    <div className="form-wrapper">
+    <div className="form-wrapper flex h-3/4 w-full flex-1 flex-col items-center p-10">
       <form
+        className="flex flex-col gap-8 p-8"
         action=""
         onSubmit={(event) => {
           handleSubmit(event);
         }}
       >
-        <h2>{action === "signup" ? "Sign up" : "Log in"}</h2>
+        <h2 className="text-2xl uppercase text-white">
+          {action === "signup" ? "Sign up" : "Log in"}
+        </h2>
         {error && <p className="red">{errorMessage}</p>}
 
         <input
