@@ -11,15 +11,17 @@ const Favorites = ({
   emailCookie,
   handleRemoveFavorite,
   addedToFavorites,
+  userCookies,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
+  const user = JSON.parse(userCookies);
+  console.log(user.email);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/favorites?email=${emailCookie}`
+          `${baseUrl}/favorites?email=${user.email}`
         );
 
         setData(response.data);
@@ -32,7 +34,7 @@ const Favorites = ({
 
     fetchData();
   }, [displayCharacters, addedToFavorites]);
-  if (token) {
+  if (userCookies) {
     return isLoading ? (
       <div className="loader">LOADING</div>
     ) : (

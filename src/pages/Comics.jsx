@@ -12,8 +12,8 @@ const Comics = ({
   handleRemoveFavorite,
   truncateStr,
   addedToFavorites,
-  token,
-  emailCookie,
+  userCookies,
+  user,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -22,11 +22,12 @@ const Comics = ({
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
 
+  console.log("user", user);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/comics?title=${title}&email=${emailCookie}`
+          `${baseUrl}/comics?title=${title}&email=${user.email}`
         );
 
         setData(response.data);
@@ -39,7 +40,7 @@ const Comics = ({
     fetchData();
   }, [title, skip, addedToFavorites]);
 
-  if (!token) {
+  if (!userCookies) {
     return <Navigate to="/login" />;
   } else {
     return isLoading ? (
@@ -109,7 +110,7 @@ const Comics = ({
           nbPages={nbPages}
           setSkip={setSkip}
           apiUrl={`${baseUrl}/comics`}
-          token={token}
+          userCookies={userCookies}
         />
       </main>
     );

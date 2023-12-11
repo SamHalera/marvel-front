@@ -16,6 +16,7 @@ const Characters = ({
   token,
   truncateStr,
   emailCookie,
+  userCookies,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +46,8 @@ const Characters = ({
     fetchData();
   }, [name, skip, addedToFavorites]);
 
-  if (!token) {
+  console.log("userCookies==>", userCookies);
+  if (!userCookies) {
     return <Navigate to="/login" />;
   } else {
     return (

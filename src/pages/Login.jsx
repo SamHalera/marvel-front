@@ -1,6 +1,7 @@
 import Form from "../components/Form";
 
-const Login = ({ handleToken, handleId, handleEmailCookie }) => {
+const Login = ({ userCookies, setUserCookies, createUserCookies }) => {
+  console.log(userCookies);
   return (
     <main className="form-container bg-settings">
       <div className="overlay">
@@ -8,9 +9,7 @@ const Login = ({ handleToken, handleId, handleEmailCookie }) => {
           <Form
             action="login"
             apiURL="user/login"
-            handleToken={handleToken}
-            handleId={handleId}
-            handleEmailCookie={handleEmailCookie}
+            createUserCookies={createUserCookies}
           />
           <div className="presentation">
             <h1>

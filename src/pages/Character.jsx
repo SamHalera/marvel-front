@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import baseUrl from "../api";
 
-const Character = (token) => {
+const Character = (userCookies) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,11 +27,9 @@ const Character = (token) => {
 
     fetchData();
   }, []);
-  if (!token) {
-    console.log("NO TOKEN");
+  if (!userCookies) {
     return <Navigate to="/login" />;
   } else {
-    console.log("TOKEN YES");
     return isLoading ? (
       <div className="loader">LOADING</div>
     ) : (

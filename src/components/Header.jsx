@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import Cookies from "js-cookie";
 import logo from "../assets/images/logo.svg";
 import { useState } from "react";
-const Header = ({ token, handleToken, setToken, setUserId }) => {
+const Header = ({ userCookies, handleRemoveUserCookies }) => {
   const [displayMenu, setDisplayMenu] = useState(false);
+  const [displayProfileSubmenu, setDisplayProfileSubmenu] = useState(false);
   const navigate = useNavigate();
 
   // const handleDisplayMenu = ()=>()
@@ -15,18 +17,18 @@ const Header = ({ token, handleToken, setToken, setUserId }) => {
 
       <img
         onClick={() => {
-          if (!token) {
+          if (!userCookies) {
             navigate("/login");
           } else {
-            navigate("/login");
+            navigate("/");
           }
         }}
-        className="logo"
+        className="logo w-36"
         src={logo}
         alt=""
       />
 
-      {token ? (
+      {userCookies ? (
         <div>
           <div className="burger-mobile">
             {!displayMenu && (
@@ -74,17 +76,9 @@ const Header = ({ token, handleToken, setToken, setUserId }) => {
               </span>
               <button
                 onClick={() => {
-                  Cookies.remove("email");
-                  Cookies.remove("token");
-                  Cookies.remove("userId");
-                  console.log("removing ?");
-
-                  // setToken(null);
-                  // setUserId(null);
-                  // setEmailCookie(null);
+                  handleRemoveUserCookies();
                   setDisplayMenu(false);
-                  // handleToken(null);
-                  // handleId(null);
+
                   navigate("/login");
                 }}
                 className="btn-logout"
@@ -98,20 +92,37 @@ const Header = ({ token, handleToken, setToken, setUserId }) => {
             <Link to="/">Characters</Link>
             <Link to="/comics">Comics</Link>
             <Link to="/favorites">My Favorites</Link>
-            <button
-              onClick={() => {
-                Cookies.remove("token");
-                Cookies.remove("userId");
-                setToken(null);
-                setUserId(null);
-                // handleToken(null);
-                // handleId(null);
-                navigate("/login");
-              }}
-              className="btn-logout"
-            >
-              Logout
-            </button>
+            <div className="profile-menu">
+              <FontAwesomeIcon
+                onClick={() => {
+                  setDisplayProfileSubmenu(!displayProfileSubmenu);
+                }}
+                className="user-icon"
+                icon="fa-solid fa-user"
+              />
+              {displayProfileSubmenu && (
+                <div className="profile-submenu">
+                  <Link
+                    onClick={() => {
+                      setDisplayProfileSubmenu(false);
+                    }}
+                    to="/profile"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleRemoveUserCookies();
+                      setDisplayProfileSubmenu(false);
+                      navigate("/login");
+                    }}
+                    className="btn-logout"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
       ) : (
