@@ -3,14 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  fas,
+  faUser,
+  faBars,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faStar } from "@fortawesome/free-regular-svg-icons";
 import baseUrl from "./api";
 //assets
 import "./App.css";
 
 //Components
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 
 //Pages
 import Characters from "./pages/Characters";
@@ -22,7 +27,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 
-library.add(faUser);
+library.add(fas, faUser, faBars, faCircleXmark, faStar, faHeart);
 function App() {
   // const [token, setToken] = useState(Cookies.get("token") || null);
   // const [userId, setUserId] = useState(Cookies.get("userId") || null);
@@ -59,6 +64,7 @@ function App() {
 
   const handleAddFavorite = async (id, target) => {
     try {
+      console.log("Hello favorite");
       const response = await axios.post(
         `${baseUrl}/favorites`,
         {
@@ -70,7 +76,7 @@ function App() {
             Authorization: `Bearer ${user.token}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       setAddedToFavorites(!addedToFavorites);
     } catch (error) {
@@ -136,6 +142,7 @@ function App() {
                 addedToFavorites={addedToFavorites}
                 handleRemoveFavorite={handleRemoveFavorite}
                 userCookies={userCookies}
+                user={user}
               />
             }
           ></Route>

@@ -3,9 +3,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import baseUrl from "../api";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 //components
 
 import PaginationAltern from "../components/PaginationAltern";
+import Loader from "../components/Loader";
 
 const Comics = ({
   handleAddFavorite,
@@ -27,7 +30,7 @@ const Comics = ({
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/comics?title=${title}&email=${user.email}`
+          `${baseUrl}/comics?title=${title}&email=${user.email}&skip=${skip}`,
         );
 
         setData(response.data);
@@ -44,13 +47,16 @@ const Comics = ({
     return <Navigate to="/login" />;
   } else {
     return isLoading ? (
-      <div className="loader">LOADING</div>
+      <Loader />
     ) : (
       <main className="comics-main">
-        <div className="search-bar">
-          <span>Find your favorite comic {title}</span>
+        <div className="search-bar m-auto flex w-2/3 flex-col items-center gap-5 py-8">
+          <span className="mb-5 mt-5 text-3xl text-white">
+            Find your favorite comic {title}
+          </span>
           <div className="input-wrapper">
             <input
+              className=" border border-solid border-red-500 bg-transparent  px-5  py-2 text-xl text-white"
               onChange={(event) => {
                 setTitle(event.target.value);
                 setSkip("");
@@ -61,37 +67,45 @@ const Comics = ({
             />
           </div>
         </div>
-        <div className="container">
+        <div className="container m-auto">
           <div className="list-container">
-            <h2 className="results-title">Results: {data.count}</h2>
-            <section className="list comics-list">
+            <h2 className="results-title text-3xl font-bold text-white">
+              Results: {data.count}
+            </h2>
+            <section className="list comics-list mt-10 flex flex-wrap justify-center gap-5">
               {data.results.map((result) => {
                 return (
-                  <article key={result._id} className="item comics-item">
+                  <article
+                    key={result._id}
+                    className="item comics-item my-5 flex h-auto w-1/6 flex-col gap-4 "
+                  >
                     <img
+                      className="h-52 w-52 object-cover object-center"
                       src={`${result.thumbnail.path}/standard_fantastic.${result.thumbnail.extension}`}
                       alt=""
                     />
-                    <h2>{result.title}</h2>
-                    <p>
+                    <h2 className="text-2xl text-white">{result.title}</h2>
+                    <p className="text-white">
                       {result.description &&
-                        truncateStr(result.description, 100)}
+                        truncateStr(result.description, 120)}
                     </p>
                     <div className="favorites">
                       {result.isFavorite ? (
-                        <i
+                        <FontAwesomeIcon
                           onClick={() => {
                             handleRemoveFavorite(result._id, "comic");
                           }}
-                          className="fas fa-star"
-                        ></i>
+                          className="cursor-pointer text-2xl text-[#ed1d24]"
+                          icon="fa-solid fa-star"
+                        />
                       ) : (
-                        <i
+                        <FontAwesomeIcon
                           onClick={() => {
                             handleAddFavorite(result._id, "comic");
                           }}
-                          className="far fa-star"
-                        ></i>
+                          className="cursor-pointer text-2xl text-white"
+                          icon="fa-regular fa-star"
+                        />
                       )}
                     </div>
                   </article>

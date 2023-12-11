@@ -2,5 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #ed1d24;
+}
+html {
+  scroll-behavior: smooth;
+  transition: all 0.6s ease-in-out;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  /* background-color: #202020; */
+  background-image: linear-gradient(
+    to right top,
+    #161a3a,
+    #13162f,
+    #111224,
+    #0d0d1a,
+    #06060e
+  );
+}
+a {
+  transition: all 0.4s ease-in-out;
+}
+nav > a {
+  margin: 0 15px;
+  font-size: 18px;
+  text-decoration: none;
+
+  color: white;
+  border-bottom: 3px solid transparent;
+  /* padding-bottom: 8px; */
+}
+nav a:hover {
+  color: #ed1d24;
+  border-bottom: 3px solid #ed1d24;
+}
+a:hover,
+.pagination .prev:hover,
+.pagination .next:hover {
+  color: #ed1d24;
+}
+.btn-logout {
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: white;
+  padding: 8px 10px;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+.pagination input[type="submit"] {
+  transition: all 0.4s ease-in-out;
+}
+.pagination input[type="submit"]:hover,
+.btn-logout:hover {
+  background-color: transparent;
+  color: var(--color-primary);
+}
+nav.nav-mobile span {
+  font-size: 20px;
+  color: white;
+}
+.bg-settings {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.disabled {
+  color: rgb(74, 74, 74);
+}
+.red {
+  color: var(--color-primary);
+}
+.active {
+  border-bottom: 2px solid var(--color-primary);
+}
+.toggle-favorites span {
+  transition: all 0.4s ease-in-out;
+}
+.toggle-favorites span:hover {
+  color: var(--color-primary);
+}
+.pagination .prev,
+.pagination .next {
+  transition: all 0.4s ease-in-out;
+}
+.pagination input:focus {
+  outline: none;
+}
+footer {
+  background-image: linear-gradient(
+    to right top,
+    #161a3a,
+    #13162f,
+    #111224,
+    #0d0d1a,
+    #06060e
+  );
+}
+.btn-groups a {
+  transition: all 0.4s ease-in-out;
+}
+.btn-groups a:hover {
+  background-color: transparent;
+  color: white;
+}
+/*==rgb(46, 47, 67)-CHARACTERS=======*/
+.bg-img {
+  height: 40vh;
+  background-color: #161a3a;
+  width: 100%;
+  background-image: url("../src/assets/images/bg-img-home.jpg");
+}
+.search-bar input:focus {
+  outline: none;
+}
+
 /* Small devices such as large phones (640px and up) */
 /* @media only screen and (min-width: 40em) {...} */
