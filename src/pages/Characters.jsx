@@ -61,7 +61,7 @@ const Characters = ({
         {isLoading ? (
           <Loader />
         ) : (
-          <div className="container m-auto">
+          <div className="container m-auto px-4">
             <div className="list-container">
               <div className="search-bar m-auto flex w-2/3 flex-col items-center gap-5 py-8">
                 <span className="mb-5 mt-5 text-3xl text-white">
@@ -90,7 +90,7 @@ const Characters = ({
                   return (
                     <article
                       key={result._id}
-                      className="item character-item my-5 flex w-1/6 flex-col gap-4"
+                      className="item character-item my-5 flex w-1/2 flex-col gap-4 md:w-1/4 lg:w-1/6"
                     >
                       <Link
                         className="image-wrapper"

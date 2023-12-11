@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import {
-  fas,
-  faUser,
-  faBars,
+  faHeart,
+  faStar,
   faCircleXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { faHeart, faStar } from "@fortawesome/free-regular-svg-icons";
+} from "@fortawesome/free-regular-svg-icons";
 import baseUrl from "./api";
 //assets
 import "./App.css";

@@ -9,7 +9,7 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
       <div className="burger-mobile">
         {!displayMenu && (
           <FontAwesomeIcon
-            className="absolute left-8 text-3xl text-white"
+            className="absolute left-8 top-8 text-3xl text-white"
             onClick={() => {
               setDisplayMenu(true);
               setDisplayProfileSubmenu(false);
@@ -19,18 +19,19 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
         )}
         {displayMenu && (
           <FontAwesomeIcon
-            className="absolute left-8  z-40 text-3xl text-white"
+            className="absolute left-8 top-8  z-40 text-3xl text-white"
             right-3
             onClick={() => {
               setDisplayMenu(false);
             }}
-            icon="fa-solid fa-circle-xmark"
+            icon="fa-regular fa-circle-xmark"
           />
         )}
       </div>
       {displayMenu && (
         <nav className="nav-mobile fixed bottom-0 left-0 right-0 top-0 z-30 flex h-full w-full flex-col items-center justify-start gap-7 bg-black px-5 py-20 ">
           <span
+            className="text-3xl font-bold"
             onClick={() => {
               setDisplayMenu(false);
               navigate("/");
@@ -39,6 +40,7 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
             Characters
           </span>
           <span
+            className="text-3xl font-bold"
             onClick={() => {
               setDisplayMenu(false);
               navigate("/comics");
@@ -47,6 +49,7 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
             Comics
           </span>
           <span
+            className="text-3xl font-bold"
             onClick={() => {
               setDisplayMenu(false);
               navigate("/favorites");

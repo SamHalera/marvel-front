@@ -41,7 +41,7 @@ const Favorites = ({
     return isLoading ? (
       <Loader />
     ) : (
-      <main className={`favorites-main ${data.length === 0 ? "h-screen" : ""}`}>
+      <main className="favorites-main h-screen">
         <h1 className=" m-8 text-center text-4xl font-bold text-white">
           My Favorites
         </h1>
@@ -108,7 +108,7 @@ const Favorites = ({
                       return (
                         <article
                           key={favorite._id}
-                          className="item my-5 flex w-1/6 flex-col gap-4"
+                          className="item my-5 flex w-1/2 flex-col gap-4 md:w-1/4 lg:w-1/6"
                         >
                           <h3 className="text-xl text-white">
                             {favorite.title || favorite.name}

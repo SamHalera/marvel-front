@@ -67,9 +67,9 @@ const Comics = ({
             />
           </div>
         </div>
-        <div className="container m-auto">
+        <div className="container m-auto p-5">
           <div className="list-container">
-            <h2 className="results-title text-3xl font-bold text-white">
+            <h2 className="results-title text-2xl font-bold text-white md:text-3xl">
               Results: {data.count}
             </h2>
             <section className="list comics-list mt-10 flex flex-wrap justify-center gap-5">
@@ -77,7 +77,7 @@ const Comics = ({
                 return (
                   <article
                     key={result._id}
-                    className="item comics-item my-5 flex h-auto w-1/6 flex-col gap-4 "
+                    className="item comics-item my-5 flex h-auto w-1/2 flex-col gap-4 md:w-1/4 lg:w-1/6 "
                   >
                     <img
                       className="h-52 w-52 object-cover object-center"

@@ -41,7 +41,7 @@ const Header = ({ userCookies, handleRemoveUserCookies }) => {
             navigate("/");
           }
         }}
-        className="logo w-36"
+        className="logo w-24 md:w-36"
         src={logo}
         alt=""
       />
@@ -60,7 +60,10 @@ const Header = ({ userCookies, handleRemoveUserCookies }) => {
           />
         </div>
       ) : (
-        <nav className="flex items-center gap-5 text-white">
+        <nav
+          className="flex items-center
+         text-white"
+        >
           <Link to={"/signup"}>Signup</Link>
           <Link to={"/login"}>Login</Link>
         </nav>

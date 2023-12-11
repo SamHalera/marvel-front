@@ -55,9 +55,9 @@ const Form = ({ action, apiURL, createUserCookies }) => {
     }
   };
   return (
-    <div className="form-wrapper flex h-3/4 w-full flex-1 flex-col items-center p-10">
+    <div className="form-wrapper flex h-auto w-full flex-1 flex-col items-center p-10 md:m-auto md:w-2/3 lg:h-3/4">
       <form
-        className="flex flex-col gap-8 p-8"
+        className="flex flex-col gap-4 p-8"
         action=""
         onSubmit={(event) => {
           handleSubmit(event);
