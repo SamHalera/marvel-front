@@ -1,29 +1,32 @@
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Loader from "../components/Loader";
 
 const Favorites = ({
   baseUrl,
   displayCharacters,
   setDisplayCharacters,
-  token,
-  userId,
-  emailCookie,
   handleRemoveFavorite,
   addedToFavorites,
   userCookies,
+  user,
 }) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const user = JSON.parse(userCookies);
-  console.log(user.email);
+  console.log("email", user.email);
+
+  console.log("displayCharacters==>", displayCharacters);
+  // console.log("data", data.length);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/favorites?email=${user.email}`
+          `${baseUrl}/favorites?email=${user.email}&id=${user.id}`,
         );
 
+        console.log("response data====>", response.data);
         setData(response.data);
 
         setIsLoading(false);
@@ -36,31 +39,47 @@ const Favorites = ({
   }, [displayCharacters, addedToFavorites]);
   if (userCookies) {
     return isLoading ? (
-      <div className="loader">LOADING</div>
+      <Loader />
     ) : (
-      <main
-        className={`favorites-main ${data.length === 0 ? "height-100" : ""}`}
-      >
-        <h1>My Favorites</h1>
+      <main className={`favorites-main ${data.length === 0 ? "h-screen" : ""}`}>
+        <h1 className=" m-8 text-center text-4xl font-bold text-white">
+          My Favorites
+        </h1>
 
         {data.length === 0 ? (
-          <div className="cta">
-            <h2>You don't have any favorite yet</h2>
-            <h3>Give a look on these two sections:</h3>
-            <div className="btn-groups">
-              <Link to="/">Characters</Link>
-              <Link to="/comics">Comics</Link>
+          <div className="cta mx-auto my-10 flex w-[80%] flex-col gap-5 text-center">
+            <h2 className="text-2xl text-white">
+              You don't have any favorite yet
+            </h2>
+            <h3 className="text-xl text-white">
+              Give a look on these two sections:
+            </h3>
+            <div className="btn-groups mt-10">
+              <Link
+                className=" boder m-8 cursor-pointer border border-solid border-[#ed1d24] bg-[#ed1d24] p-3 text-white"
+                to="/"
+              >
+                Characters
+              </Link>
+              <Link
+                className=" boder m-8 cursor-pointer border border-solid border-[#ed1d24] bg-[#ed1d24] p-3 text-white"
+                to="/comics"
+              >
+                Comics
+              </Link>
             </div>
           </div>
         ) : (
           <div>
-            <div className="toggle-favorites">
+            <div className="toggle-favorites flex items-center justify-center gap-8 text-2xl">
               <span
                 onClick={() => {
                   setDisplayCharacters("character");
                 }}
-                className={`${
-                  displayCharacters === "character" ? "red active" : ""
+                className={`cursor-pointer ${
+                  displayCharacters === "character"
+                    ? "red active"
+                    : "text-white"
                 }`}
               >
                 Characters
@@ -69,38 +88,55 @@ const Favorites = ({
                 onClick={() => {
                   setDisplayCharacters("comic");
                 }}
-                className={`${
-                  displayCharacters === "comic" ? "red active" : ""
+                className={`cursor-pointer ${
+                  displayCharacters === "comic" ? "red active" : "text-white"
                 }`}
               >
                 Comics
               </span>
             </div>
 
-            <div className="container">
-              <section className="list favorites-list">
+            <div className="container m-auto">
+              <section className="list favorites-list mt-10 flex flex-wrap justify-center gap-5">
                 {data.map((favorite) => {
-                  console.log("favorite.user=>", favorite.user);
-                  console.log("userId=>", userId);
-                  if (favorite.user === userId) {
+                  // console.log("favorite.user=>", favorite.user);
+                  // console.log("userId=>", user.id);
+                  if (favorite.user === user.id) {
                     // displayCharacters === favorite.label &&
                     if (displayCharacters === favorite.label) {
+                      console.log("favorite id====>", favorite._id);
                       return (
-                        <article key={favorite._id} className="item">
-                          <h3>{favorite.title || favorite.name}</h3>
+                        <article
+                          key={favorite._id}
+                          className="item my-5 flex w-1/6 flex-col gap-4"
+                        >
+                          <h3 className="text-xl text-white">
+                            {favorite.title || favorite.name}
+                          </h3>
                           <div className="image-wrapper">
                             <img
+                              className=" h-72 w-64 object-cover object-center"
                               src={`${favorite.thumbnail.path}.${favorite.thumbnail.extension}`}
                               alt=""
                             />
                           </div>
                           <div className="favorites">
-                            <i
+                            <FontAwesomeIcon
+                              onClick={() => {
+                                handleRemoveFavorite(
+                                  favorite._id,
+                                  favorite.label,
+                                );
+                              }}
+                              className="cursor-pointer text-2xl text-[#ed1d24]"
+                              icon="fa-solid fa-star"
+                            />
+                            {/* <i
                               onClick={() => {
                                 handleRemoveFavorite(favorite._id, "character");
                               }}
                               className="fas fa-star"
-                            ></i>
+                            ></i> */}
                           </div>
                         </article>
                       );

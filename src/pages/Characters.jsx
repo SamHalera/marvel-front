@@ -1,11 +1,13 @@
-import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import baseUrl from "../api";
 
 //components
 // import Pagination from "../components/Pagination";
 import PaginationAltern from "../components/PaginationAltern";
+import Loader from "../components/Loader";
 
 //assets
 
@@ -13,9 +15,9 @@ const Characters = ({
   handleAddFavorite,
   handleRemoveFavorite,
   addedToFavorites,
-  token,
+  user,
   truncateStr,
-  emailCookie,
+
   userCookies,
 }) => {
   const [data, setData] = useState({});
@@ -31,7 +33,7 @@ const Characters = ({
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}?name=${name}&email=${emailCookie}`
+          `${baseUrl}?name=${name}&email=${user.email}&skip=${skip}`,
         );
 
         setData(response.data);
@@ -53,18 +55,21 @@ const Characters = ({
     return (
       <main className="characters-main">
         <section className="bg-img bg-settings">
-          <div className="overlay"></div>
+          <div className="overlay bg flex h-[40vh] w-full items-center justify-center bg-black bg-opacity-60"></div>
         </section>
 
         {isLoading ? (
-          <div className="loader">LOADING...</div>
+          <Loader />
         ) : (
-          <div className="container">
+          <div className="container m-auto">
             <div className="list-container">
-              <div className="search-bar">
-                <span>Find your favorite heroe</span>
+              <div className="search-bar m-auto flex w-2/3 flex-col items-center gap-5 py-8">
+                <span className="mb-5 mt-5 text-3xl text-white">
+                  Find your favorite heroe
+                </span>
                 <div className="input-wrapper">
                   <input
+                    className=" border border-solid border-red-500 bg-transparent  px-5  py-2 text-xl text-white"
                     onChange={(event) => {
                       setName(event.target.value);
 
@@ -76,40 +81,48 @@ const Characters = ({
                   />
                 </div>
               </div>
-              <h2 className="results-title">Results: {data.count}</h2>
+              <h2 className="results-title text-3xl font-bold text-white">
+                Results: {data.count}
+              </h2>
 
-              <section className="list characters-list">
+              <section className="list characters-list mt-10 flex flex-wrap justify-center gap-5">
                 {data.results.map((result) => {
                   return (
-                    <article key={result._id} className="item character-item">
+                    <article
+                      key={result._id}
+                      className="item character-item my-5 flex w-1/6 flex-col gap-4"
+                    >
                       <Link
                         className="image-wrapper"
                         to={`/comics/${result._id}`}
                       >
                         <img
+                          className="  h-64 w-full object-cover object-center"
                           src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
                           alt=""
                         />
                       </Link>
-                      <h2>{result.name}</h2>
-                      <div className="favorites">
+                      <h2 className="text-2xl text-white">{result.name}</h2>
+                      <div className="favorites z-10">
                         {result.isFavorite ? (
-                          <i
+                          <FontAwesomeIcon
+                            className="cursor-pointer text-2xl text-[#ed1d24]"
                             onClick={() => {
                               handleRemoveFavorite(result._id, "character");
                             }}
-                            className="fas fa-star"
-                          ></i>
+                            icon="fa-solid fa-star"
+                          />
                         ) : (
-                          <i
+                          <FontAwesomeIcon
+                            className="cursor-pointer text-2xl text-white"
                             onClick={() => {
                               handleAddFavorite(result._id, "character");
                             }}
-                            className="far fa-star"
-                          ></i>
+                            icon="fa-regular fa-star"
+                          />
                         )}
                       </div>
-                      <p>
+                      <p className="text-white">
                         {result.description &&
                           truncateStr(result.description, 100)}
                       </p>
@@ -126,7 +139,7 @@ const Characters = ({
                 nbPages={nbPages}
                 setSkip={setSkip}
                 apiUrl={baseUrl}
-                token={token}
+                token={user.token}
               />
             </div>
           </div>
