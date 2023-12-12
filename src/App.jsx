@@ -97,6 +97,7 @@ function App() {
         <Header
           userCookies={userCookies}
           handleRemoveUserCookies={handleRemoveUserCookies}
+          createUserCookies={createUserCookies}
         />
         <Routes>
           <Route
@@ -109,6 +110,7 @@ function App() {
                 truncateStr={truncateStr}
                 userCookies={userCookies}
                 user={user}
+                createUserCookies={createUserCookies}
               />
             }
           ></Route>
@@ -122,6 +124,7 @@ function App() {
                 addedToFavorites={addedToFavorites}
                 truncateStr={truncateStr}
                 user={user}
+                createUserCookies={createUserCookies}
               />
             }
           ></Route>
@@ -153,10 +156,10 @@ function App() {
             path="/signup"
             element={<Signup createUserCookies={createUserCookies} />}
           ></Route>
-          <Route
+          {/* <Route
             path="/login"
             element={<Login createUserCookies={createUserCookies} />}
-          ></Route>
+          ></Route> */}
         </Routes>
         <Footer />
       </Router>

@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const MobileNav = ({
-  handleRemoveUserCookies,
-  setDisplayProfileSubmenu,
-  userCookies,
-}) => {
+const MobileNav = ({ setDisplayProfileSubmenu, userCookies, openModal }) => {
   const [displayMenu, setDisplayMenu] = useState(false);
   const navigate = useNavigate();
   return (
@@ -24,7 +20,6 @@ const MobileNav = ({
         {displayMenu && (
           <FontAwesomeIcon
             className="absolute left-8 top-8  z-40 text-3xl text-white"
-            right-3
             onClick={() => {
               setDisplayMenu(false);
             }}
@@ -52,7 +47,7 @@ const MobileNav = ({
           >
             Comics
           </span>
-          {userCookies && (
+          {userCookies ? (
             <span
               className="text-3xl font-bold"
               onClick={() => {
@@ -62,9 +57,19 @@ const MobileNav = ({
             >
               My Favorites
             </span>
+          ) : (
+            <>
+              <Link to={"/signup"}>Signup</Link>
+              <a
+                onClick={() => {
+                  setDisplayMenu(false);
+                  openModal();
+                }}
+              >
+                Login
+              </a>
+            </>
           )}
-          <Link to={"/signup"}>Signup</Link>
-          <Link to={"/login"}>Login</Link>
 
           {/* <button
             onClick={() => {

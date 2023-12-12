@@ -6,11 +6,21 @@ import logo from "../../assets/images/logo.svg";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import ProfileMenu from "./ProfileMenu";
-const Header = ({ userCookies, handleRemoveUserCookies }) => {
+import ModalAuth from "../ModalAuth";
+const Header = ({
+  userCookies,
+  handleRemoveUserCookies,
+  createUserCookies,
+}) => {
   const [displayProfileSubmenu, setDisplayProfileSubmenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const refProfile = useRef();
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
   const handleClickWindow = (event) => {
     if (refProfile.current && !refProfile.current.contains(event.target)) {
       setDisplayProfileSubmenu(false);
@@ -25,11 +35,17 @@ const Header = ({ userCookies, handleRemoveUserCookies }) => {
     };
   }, []);
   return (
-    <header className="fixed mb-8 flex w-full items-center justify-between px-12 py-5">
+    <header className="fixed top-0 flex w-full items-center justify-between px-12 py-5">
+      <ModalAuth
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        createUserCookies={createUserCookies}
+      />
       <MobileNav
         handleRemoveUserCookies={handleRemoveUserCookies}
         setDisplayProfileSubmenu={setDisplayProfileSubmenu}
         userCookies={userCookies}
+        openModal={openModal}
       />
 
       <img
@@ -50,6 +66,7 @@ const Header = ({ userCookies, handleRemoveUserCookies }) => {
           displayProfileSubmenu={displayProfileSubmenu}
           setDisplayProfileSubmenu={setDisplayProfileSubmenu}
           userCookies={userCookies}
+          openModal={openModal}
         />
 
         {userCookies && (

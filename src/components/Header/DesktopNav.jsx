@@ -6,6 +6,7 @@ const DesktopNav = ({
   setDisplayProfileSubmenu,
   handleRemoveUserCookies,
   userCookies,
+  openModal,
 }) => {
   const navigate = useNavigate();
   return (
@@ -13,10 +14,16 @@ const DesktopNav = ({
       <Link to="/">Characters</Link>
       <Link to="/comics">Comics</Link>
 
-      {userCookies && <Link to="/favorites">My Favorites</Link>}
-
-      <Link to={"/signup"}>Signup</Link>
-      <Link to={"/login"}>Login</Link>
+      {userCookies ? (
+        <Link to="/favorites">My Favorites</Link>
+      ) : (
+        <>
+          <Link to={"/signup"}>Signup</Link>
+          <a className="cursor-pointer" onClick={openModal}>
+            Login
+          </a>
+        </>
+      )}
     </nav>
   );
 };

@@ -6,7 +6,7 @@ import baseUrl from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //components
-
+import ModalAuth from "../components/ModalAuth";
 import PaginationAltern from "../components/PaginationAltern";
 import Loader from "../components/Loader";
 
@@ -17,6 +17,7 @@ const Comics = ({
   addedToFavorites,
   userCookies,
   user,
+  createUserCookies,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,11 @@ const Comics = ({
   const [page, setPage] = useState(1);
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
   console.log("user", user);
   useEffect(() => {
     const fetchData = async () => {
@@ -48,8 +53,14 @@ const Comics = ({
     <Loader />
   ) : (
     <main className="comics-main">
+      <ModalAuth
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        openModal={openModal}
+        createUserCookies={createUserCookies}
+      />
       <div className="search-bar m-auto flex w-2/3 flex-col items-center gap-5 py-8">
-        <span className="mb-5 mt-5 text-3xl text-white">
+        <span className="mb-5 mt-28 text-3xl text-white">
           Find your favorite comic {title}
         </span>
         <div className="input-wrapper">
@@ -98,7 +109,11 @@ const Comics = ({
                     ) : (
                       <FontAwesomeIcon
                         onClick={() => {
-                          handleAddFavorite(result._id, "comic");
+                          if (userCookies) {
+                            handleAddFavorite(result._id, "comic");
+                          } else {
+                            openModal();
+                          }
                         }}
                         className="cursor-pointer text-2xl text-white"
                         icon="fa-regular fa-star"

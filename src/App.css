@@ -139,18 +139,18 @@ main.form-container .overlay {
 }
 /* Small devices such as large phones (640px and up) */
 /* @media only screen and (min-width: 40em) {...} */
-.form-wrapper {
+/* .form-wrapper {
   background-image: linear-gradient(
     to right top,
-    rgb(22 26 58 / 59%),
-    rgb(19 22 47 / 52%),
+    rgb(22 26 58 / 100%),
+    rgb(19 22 47 / 100%),
     #111224b3,
     #0d0d1a,
     #06060e
   );
-}
+} */
 .form-wrapper form input {
-  width: 300px;
+  /* width: 300px; */
   border: none;
   background-color: transparent;
   border-bottom: 1px solid var(--color-primary);
@@ -176,7 +176,7 @@ main.form-container .overlay {
 }
 
 .form-wrapper form button {
-  width: 150px;
+  width: 100px;
   border: 1px solid transparent;
   background: var(--color-primary);
   padding: 10px;

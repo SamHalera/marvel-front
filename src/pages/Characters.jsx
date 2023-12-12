@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import axios from "axios";
 import baseUrl from "../api";
-
+import ModalAuth from "../components/ModalAuth";
 //components
 // import Pagination from "../components/Pagination";
 import PaginationAltern from "../components/PaginationAltern";
@@ -18,15 +19,21 @@ const Characters = ({
   user,
   truncateStr,
   userCookies,
+  createUserCookies,
 }) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   //states for query
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
   const [nbPages, setNbPages] = useState();
   const [skip, setSkip] = useState(1);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,6 +67,12 @@ const Characters = ({
         <Loader />
       ) : (
         <div className="container m-auto px-4">
+          <ModalAuth
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            openModal={openModal}
+            createUserCookies={createUserCookies}
+          />
           <div className="list-container">
             <div className="search-bar m-auto flex w-2/3 flex-col items-center gap-5 py-8">
               <span className="mb-5 mt-5 text-3xl text-white">
@@ -114,7 +127,11 @@ const Characters = ({
                         <FontAwesomeIcon
                           className="cursor-pointer text-2xl text-white"
                           onClick={() => {
-                            handleAddFavorite(result._id, "character");
+                            if (userCookies) {
+                              handleAddFavorite(result._id, "character");
+                            } else {
+                              openModal();
+                            }
                           }}
                           icon="fa-regular fa-star"
                         />

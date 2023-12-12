@@ -42,7 +42,7 @@ const Favorites = ({
       <Loader />
     ) : (
       <main className="favorites-main h-screen">
-        <h1 className=" m-8 text-center text-4xl font-bold text-white">
+        <h1 className=" my-32 text-center text-4xl font-bold text-white">
           My Favorites
         </h1>
 
