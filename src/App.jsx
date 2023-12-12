@@ -3,7 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  fas,
+  faUser,
+  faBars,
+  faPlus,
+  faIdCardClip,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
   faStar,
@@ -26,7 +32,16 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 
-library.add(fas, faUser, faBars, faCircleXmark, faStar, faHeart);
+library.add(
+  fas,
+  faUser,
+  faBars,
+  faCircleXmark,
+  faStar,
+  faHeart,
+  faPlus,
+  faIdCardClip,
+);
 function App() {
   // const [token, setToken] = useState(Cookies.get("token") || null);
   // const [userId, setUserId] = useState(Cookies.get("userId") || null);
