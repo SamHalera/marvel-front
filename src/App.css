@@ -91,6 +91,17 @@ nav.nav-mobile span {
 .pagination input:focus {
   outline: none;
 }
+header {
+  background-image: linear-gradient(
+    to right top,
+    #161a3a,
+    #13162f,
+    #111224,
+    #0d0d1a,
+    #06060e
+  );
+}
+
 footer {
   background-image: linear-gradient(
     to right top,

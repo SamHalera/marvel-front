@@ -8,9 +8,9 @@ const PaginationAltern = ({
   setSkip,
   nbPages,
   apiUrl,
-  token,
+  // token,
 }) => {
-  console.log("token", token);
+  // console.log("token", token);
   const handlePagination = async (value, event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -21,11 +21,12 @@ const PaginationAltern = ({
     }
     try {
       //verifier en local si cette requete declenche une erreur.==> possible car il n'y plus de headers qui est attendu en back
-      const response = await axios.get(`${apiUrl}?skip=${value}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // const response = await axios.get(`${apiUrl}?skip=${value}`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      const response = await axios.get(`${apiUrl}?skip=${value}`);
 
       console.log("response.data===>", response.data);
       setData(response.data);

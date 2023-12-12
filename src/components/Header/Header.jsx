@@ -25,13 +25,12 @@ const Header = ({ userCookies, handleRemoveUserCookies }) => {
     };
   }, []);
   return (
-    <header className="flex w-full items-center justify-between px-12 py-5">
-      {userCookies && (
-        <MobileNav
-          handleRemoveUserCookies={handleRemoveUserCookies}
-          setDisplayProfileSubmenu={setDisplayProfileSubmenu}
-        />
-      )}
+    <header className="fixed mb-8 flex w-full items-center justify-between px-12 py-5">
+      <MobileNav
+        handleRemoveUserCookies={handleRemoveUserCookies}
+        setDisplayProfileSubmenu={setDisplayProfileSubmenu}
+        userCookies={userCookies}
+      />
 
       <img
         onClick={() => {
@@ -46,28 +45,22 @@ const Header = ({ userCookies, handleRemoveUserCookies }) => {
         alt=""
       />
 
-      {userCookies ? (
-        <div className="flex justify-between">
-          <DesktopNav
-            displayProfileSubmenu={displayProfileSubmenu}
-            setDisplayProfileSubmenu={setDisplayProfileSubmenu}
-          />
+      <div className="flex justify-between">
+        <DesktopNav
+          displayProfileSubmenu={displayProfileSubmenu}
+          setDisplayProfileSubmenu={setDisplayProfileSubmenu}
+          userCookies={userCookies}
+        />
+
+        {userCookies && (
           <ProfileMenu
             refProfile={refProfile}
             displayProfileSubmenu={displayProfileSubmenu}
             setDisplayProfileSubmenu={setDisplayProfileSubmenu}
             handleRemoveUserCookies={handleRemoveUserCookies}
           />
-        </div>
-      ) : (
-        <nav
-          className="flex items-center
-         text-white"
-        >
-          <Link to={"/signup"}>Signup</Link>
-          <Link to={"/login"}>Login</Link>
-        </nav>
-      )}
+        )}
+      </div>
     </header>
   );
 };
