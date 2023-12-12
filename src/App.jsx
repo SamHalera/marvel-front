@@ -14,6 +14,8 @@ import {
   faHeart,
   faStar,
   faCircleXmark,
+  faEye,
+  faEyeSlash,
 } from "@fortawesome/free-regular-svg-icons";
 import baseUrl from "./api";
 //assets
@@ -41,12 +43,10 @@ library.add(
   faHeart,
   faPlus,
   faIdCardClip,
+  faEye,
+  faEyeSlash,
 );
 function App() {
-  // const [token, setToken] = useState(Cookies.get("token") || null);
-  // const [userId, setUserId] = useState(Cookies.get("userId") || null);
-  // const [emailCookie, setEmailCookie] = useState(Cookies.get("email") || null);
-
   const [addedToFavorites, setAddedToFavorites] = useState(false);
 
   const [displayCharacters, setDisplayCharacters] = useState("character");
@@ -54,12 +54,13 @@ function App() {
 
   const user = userCookies && JSON.parse(Cookies.get("user"));
 
-  const createUserCookies = (id, email, username, token) => {
+  const createUserCookies = (id, email, username, token, avatar) => {
     const user = {
       id,
       email,
       username,
       token,
+      avatar,
     };
     Cookies.set("user", JSON.stringify(user), { expires: 15 });
     setUserCookies(JSON.parse(Cookies.get("user")));
@@ -106,13 +107,16 @@ function App() {
     }
   };
 
+  console.log("user===>", user);
+  console.log("userCookies====>", userCookies);
   return (
     <>
       <Router>
         <Header
-          userCookies={userCookies}
           handleRemoveUserCookies={handleRemoveUserCookies}
           createUserCookies={createUserCookies}
+          user={user}
+          userCookies={userCookies}
         />
         <Routes>
           <Route
@@ -165,7 +169,13 @@ function App() {
           ></Route>
           <Route
             path="/profile"
-            element={<Profile user={user} userCookies={userCookies} />}
+            element={
+              <Profile
+                user={user}
+                userCookies={userCookies}
+                setUserCookies={setUserCookies}
+              />
+            }
           ></Route>
           <Route
             path="/signup"

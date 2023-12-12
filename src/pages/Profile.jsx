@@ -1,22 +1,25 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 import baseUrl from "../api";
 import axios from "axios";
 import Loader from "../components/Loader";
 
-const Profile = ({ user, userCookies }) => {
+const Profile = ({ user, userCookies, setUserCookies }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [picture, setPicture] = useState("");
   const [data, setData] = useState();
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [showNewPass, setShowNewPass] = useState(false);
+  const [userIsUpdated, setUserIsUpdated] = useState(false);
 
-  // const [currentAvatar, setCurrentAvatar] = useState(user.avatar);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -26,7 +29,7 @@ const Profile = ({ user, userCookies }) => {
     try {
       const formData = new FormData();
       formData.append("username", username);
-      formData.append("passsword", password);
+      formData.append("password", password);
       formData.append("newPassword", newPassword);
       formData.append("picture", picture);
 
@@ -37,14 +40,24 @@ const Profile = ({ user, userCookies }) => {
         },
       });
 
+      setData(response.data);
+      setUserIsUpdated(!userIsUpdated);
       setIsLoading(false);
+
+      Cookies.set("user", JSON.stringify(response.data), { expires: 15 });
+      setUserCookies(JSON.parse(Cookies.get("user")));
+
       console.log("response ===>", response.data);
     } catch (error) {
+      setIsLoading(false);
+      setError(true);
+      setErrorMessage(error.response.data.message);
       console.log(error, "<=====message error");
     }
   };
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`${baseUrl}/profile`, {
           headers: {
@@ -54,13 +67,13 @@ const Profile = ({ user, userCookies }) => {
         setData(response.data);
         setIsLoading(false);
 
-        console.log(response.data);
+        console.log("user===>", response.data);
       } catch (error) {
         console.log(error, "<=====message error");
       }
     };
     fetchData();
-  }, []);
+  }, [userIsUpdated]);
 
   return !userCookies ? (
     navigate("/login")
@@ -82,10 +95,10 @@ const Profile = ({ user, userCookies }) => {
             className="mx-auto flex w-1/3 flex-col gap-5"
           >
             <div className="flex flex-col items-center justify-center gap-7">
-              <div className=" flex h-40 w-40 items-center justify-center rounded-full border border-solid border-white">
+              <div className=" flex items-center justify-center">
                 {picture ? (
                   <img
-                    className="h-40 w-40 rounded-full object-cover object-center"
+                    className="test h-40 w-40 rounded-full  object-cover object-center"
                     src={URL.createObjectURL(picture)}
                   />
                 ) : data.avatar ? (
@@ -95,7 +108,7 @@ const Profile = ({ user, userCookies }) => {
                   />
                 ) : (
                   <FontAwesomeIcon
-                    className="user-icon cursor-pointer text-8xl text-white"
+                    className="user-icon h-40 w-40 cursor-pointer rounded-full border border-solid border-white text-8xl text-white"
                     icon="fa-solid fa-user"
                   />
                 )}
@@ -130,9 +143,14 @@ const Profile = ({ user, userCookies }) => {
               {data.email}
             </h2>
 
+            <div className=" h-8">
+              <p className="red">{errorMessage && errorMessage}</p>
+            </div>
+
             <input
               onChange={(event) => {
                 setError(false);
+                setErrorMessage("");
                 setUsername(event.target.value);
               }}
               type="text"
@@ -141,26 +159,76 @@ const Profile = ({ user, userCookies }) => {
               value={username ? username : data.username}
             />
 
-            <input
-              onChange={(event) => {
-                setError(false);
-                setPassword(event.target.value);
-              }}
-              type="password"
-              id="password"
-              placeholder="Password"
-              value={password}
-            />
-            <input
-              onChange={(event) => {
-                setError(false);
-                setNewPassword(event.target.value);
-              }}
-              type="password"
-              id="newPassword"
-              placeholder="New password"
-              value={newPassword}
-            />
+            <div className="relative">
+              <input
+                className="w-full"
+                onChange={(event) => {
+                  setError(false);
+                  setErrorMessage("");
+                  setPassword(event.target.value);
+                }}
+                type={`${showPass ? "text" : "password"}`}
+                id="password"
+                placeholder="Password"
+                value={password}
+              />
+
+              {showPass ? (
+                <FontAwesomeIcon
+                  onClick={() => {
+                    setShowPass(false);
+                  }}
+                  className="absolute right-2 top-8 cursor-pointer text-xl text-white"
+                  icon="fa-regular fa-eye-slash"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  onClick={() => {
+                    if (password) {
+                      setShowPass(true);
+                    }
+                  }}
+                  className={`absolute right-2 top-8  text-xl ${
+                    password ? "cursor-pointer text-white" : "text-gray-500"
+                  } `}
+                  icon="fa-regular fa-eye"
+                />
+              )}
+            </div>
+            <div className="relative">
+              <input
+                className="w-full"
+                onChange={(event) => {
+                  setError(false);
+                  setNewPassword(event.target.value);
+                }}
+                type={`${showNewPass ? "text" : "password"}`}
+                id="newPassword"
+                placeholder="New password"
+                value={newPassword}
+              />
+              {showNewPass ? (
+                <FontAwesomeIcon
+                  onClick={() => {
+                    setShowNewPass(false);
+                  }}
+                  className="absolute right-2 top-8 cursor-pointer text-xl text-white"
+                  icon="fa-regular fa-eye-slash"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  onClick={() => {
+                    if (newPassword) {
+                      setShowNewPass(true);
+                    }
+                  }}
+                  className={`absolute right-2 top-8  text-xl ${
+                    newPassword ? "cursor-pointer text-white" : "text-gray-500"
+                  } `}
+                  icon="fa-regular fa-eye"
+                />
+              )}
+            </div>
             {username || picture || (password && newPassword) ? (
               <button className="mt-2 self-end" type="submit">
                 Update

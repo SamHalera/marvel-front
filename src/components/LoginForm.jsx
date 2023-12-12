@@ -6,7 +6,7 @@ import baseUrl from "../api";
 
 // import spinnerLogin from "../assets/images/spinner-login.gif";
 
-const LoginForm = ({ action, apiURL, createUserCookies }) => {
+const LoginForm = ({ action, apiURL, createUserCookies, closeModal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [username, setUsername] = useState("");
@@ -31,12 +31,14 @@ const LoginForm = ({ action, apiURL, createUserCookies }) => {
       const userId = response.data._id;
       const emailCookie = response.data.email;
       const usernameCookie = response.data.username;
+      const avatar = response.data.avatar;
 
-      createUserCookies(userId, emailCookie, usernameCookie, token);
+      createUserCookies(userId, emailCookie, usernameCookie, token, avatar);
 
       setEmail("");
       setPassword("");
       // setUsername("");
+      closeModal();
       navigate("/");
     } catch (error) {
       console.log(error.response.status);

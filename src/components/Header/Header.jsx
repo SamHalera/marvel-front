@@ -1,23 +1,25 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+
 // import Cookies from "js-cookie";
 import logo from "../../assets/images/logo.svg";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import ProfileMenu from "./ProfileMenu";
 import ModalAuth from "../ModalAuth";
+import ProfileMenuHeadless from "./ProfileMenuHeadless";
 const Header = ({
   userCookies,
   handleRemoveUserCookies,
   createUserCookies,
+  user,
 }) => {
   const [displayProfileSubmenu, setDisplayProfileSubmenu] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const refProfile = useRef();
-
+  console.log(user);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -70,12 +72,20 @@ const Header = ({
         />
 
         {userCookies && (
-          <ProfileMenu
+          <ProfileMenuHeadless
             refProfile={refProfile}
             displayProfileSubmenu={displayProfileSubmenu}
             setDisplayProfileSubmenu={setDisplayProfileSubmenu}
             handleRemoveUserCookies={handleRemoveUserCookies}
+            user={user}
+            userCookies={userCookies}
           />
+          // <ProfileMenu
+          //   refProfile={refProfile}
+          //   displayProfileSubmenu={displayProfileSubmenu}
+          //   setDisplayProfileSubmenu={setDisplayProfileSubmenu}
+          //   handleRemoveUserCookies={handleRemoveUserCookies}
+          // />
         )}
       </div>
     </header>
