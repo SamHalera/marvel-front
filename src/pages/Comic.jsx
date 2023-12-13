@@ -4,6 +4,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from "../components/Loader";
 import baseUrl from "../api";
+import FavoritesComponent from "../components/FavoritesComponent";
 const Comic = ({
   user,
   userCookies,
@@ -53,25 +54,14 @@ const Comic = ({
           <p className="mb-9 w-2/4 text-xl leading-8 text-white">
             {data.description}
           </p>
-          <div className="favorites">
-            {data.isFavorite ? (
-              <FontAwesomeIcon
-                onClick={() => {
-                  handleRemoveFavorite(data._id, "comic");
-                }}
-                className="cursor-pointer text-2xl text-[#ed1d24]"
-                icon="fa-solid fa-star"
-              />
-            ) : (
-              <FontAwesomeIcon
-                onClick={() => {
-                  handleAddFavorite(data._id, "comic");
-                }}
-                className="cursor-pointer text-2xl text-white"
-                icon="fa-regular fa-star"
-              />
-            )}
-          </div>
+
+          <FavoritesComponent
+            item={data}
+            label="comic"
+            userCookies={userCookies}
+            handleAddFavorite={handleAddFavorite}
+            handleRemoveFavorite={handleRemoveFavorite}
+          />
         </div>
       </div>
     </main>

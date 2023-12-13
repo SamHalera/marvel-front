@@ -37,7 +37,7 @@ const Header = ({
     };
   }, []);
   return (
-    <header className="fixed top-0 flex w-full items-center justify-between px-12 py-5">
+    <header className="fixed top-0 z-40 flex w-full items-center justify-between px-12 py-5">
       <ModalAuth
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -52,11 +52,7 @@ const Header = ({
 
       <img
         onClick={() => {
-          if (!userCookies) {
-            navigate("/login");
-          } else {
-            navigate("/");
-          }
+          navigate("/");
         }}
         className="logo w-24 md:w-36"
         src={logo}

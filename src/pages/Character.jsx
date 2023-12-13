@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import baseUrl from "../api";
 import Loader from "../components/Loader";
+import FavoritesComponent from "../components/FavoritesComponent";
+import ComicsCarousel from "../components/ComicsCarousel";
 
 const Character = ({
   user,
@@ -65,45 +67,16 @@ const Character = ({
                     You can find {data.name} in these beside{" "}
                     {data.comics.length} comics
                   </p>
-                  <div className="favorites">
-                    {data.isFavorite ? (
-                      <FontAwesomeIcon
-                        onClick={() => {
-                          handleRemoveFavorite(data._id, "character");
-                        }}
-                        className="cursor-pointer text-2xl text-[#ed1d24]"
-                        icon="fa-solid fa-star"
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        onClick={() => {
-                          handleAddFavorite(data._id, "character");
-                        }}
-                        className="cursor-pointer text-2xl text-white"
-                        icon="fa-regular fa-star"
-                      />
-                    )}
-                  </div>
+                  <FavoritesComponent
+                    item={data}
+                    label="character"
+                    userCookies={userCookies}
+                    handleAddFavorite={handleAddFavorite}
+                    handleRemoveFavorite={handleRemoveFavorite}
+                  />
                 </div>
               </div>
-              <div className="list-of-comics flex w-4/5 flex-nowrap overflow-x-scroll">
-                {data.comics.map((comic) => {
-                  return (
-                    <Link
-                      to={`/comic/${comic._id}`}
-                      key={comic._id}
-                      className=" w-60 shrink-0 hover:opacity-50"
-                    >
-                      <img
-                        className="mb-2"
-                        src={`${comic.thumbnail.path}/standard_fantastic.${data.thumbnail.extension}`}
-                        alt=""
-                      />
-                      <h3 className="text-center text-white">{comic.title}</h3>
-                    </Link>
-                  );
-                })}
-              </div>
+              <ComicsCarousel data={data} />
             </article>
           </section>
         </div>

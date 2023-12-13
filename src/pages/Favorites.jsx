@@ -23,7 +23,7 @@ const Favorites = ({
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/favorites?email=${user.email}&id=${user._id}`,
+          `${baseUrl}/favorites?email=${user.email}&id=${user.id}`,
         );
 
         console.log("response data====>", response.data);
@@ -101,7 +101,7 @@ const Favorites = ({
                 {data.map((favorite) => {
                   // console.log("favorite.user=>", favorite.user);
                   // console.log("userId=>", user.id);
-                  if (favorite.user === user._id) {
+                  if (favorite.user === user.id) {
                     // displayCharacters === favorite.label &&
                     if (displayCharacters === favorite.label) {
                       console.log("favorite id====>", favorite._id);

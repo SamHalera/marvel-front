@@ -6,55 +6,18 @@ import Cookies from "js-cookie";
 import baseUrl from "../api";
 import axios from "axios";
 import Loader from "../components/Loader";
+import Form from "../components/FormProfile/Form";
 
 const Profile = ({ user, userCookies, setUserCookies }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [picture, setPicture] = useState("");
+
   const [data, setData] = useState();
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [showPass, setShowPass] = useState(false);
-  const [showNewPass, setShowNewPass] = useState(false);
   const [userIsUpdated, setUserIsUpdated] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const formData = new FormData();
-      formData.append("username", username);
-      formData.append("password", password);
-      formData.append("newPassword", newPassword);
-      formData.append("picture", picture);
-
-      const response = await axios.put(`${baseUrl}/profile`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-
-      setData(response.data);
-      setUserIsUpdated(!userIsUpdated);
-      setIsLoading(false);
-
-      Cookies.set("user", JSON.stringify(response.data), { expires: 15 });
-      setUserCookies(JSON.parse(Cookies.get("user")));
-
-      console.log("response ===>", response.data);
-    } catch (error) {
-      setIsLoading(false);
-      setError(true);
-      setErrorMessage(error.response.data.message);
-      console.log(error, "<=====message error");
-    }
-  };
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -87,7 +50,20 @@ const Profile = ({ user, userCookies, setUserCookies }) => {
 
       <div className="wrapper-infos mx-auto mt-6 w-4/5">
         <div className="user-infos form-wrapper">
-          <form
+          <Form
+            data={data}
+            userIsUpdated={userIsUpdated}
+            setUserIsUpdated={setUserIsUpdated}
+            user={user}
+            setUserCookies={setUserCookies}
+            setIsLoading={setIsLoading}
+            setData={setData}
+            error={error}
+            setError={setError}
+            errorMessage={errorMessage}
+            setErrorMessage={setErrorMessage}
+          />
+          {/* <form
             onSubmit={(event) => {
               handleSubmit(event);
             }}
@@ -238,7 +214,7 @@ const Profile = ({ user, userCookies, setUserCookies }) => {
                 Update
               </span>
             )}
-          </form>
+          </form> */}
         </div>
       </div>
     </div>
