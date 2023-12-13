@@ -28,6 +28,7 @@ import Header from "./components/Header/Header";
 import Characters from "./pages/Characters";
 import Character from "./pages/Character";
 import Comics from "./pages/Comics";
+import Comic from "./pages/Comic";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
@@ -149,7 +150,27 @@ function App() {
           ></Route>
           <Route
             path="/comics/:characterId"
-            element={<Character userCookies={userCookies} user={user} />}
+            element={
+              <Character
+                userCookies={userCookies}
+                user={user}
+                handleAddFavorite={handleAddFavorite}
+                handleRemoveFavorite={handleRemoveFavorite}
+                addedToFavorites={addedToFavorites}
+              />
+            }
+          ></Route>
+          <Route
+            path="/comic/:id"
+            element={
+              <Comic
+                user={user}
+                userCookies={userCookies}
+                handleAddFavorite={handleAddFavorite}
+                handleRemoveFavorite={handleRemoveFavorite}
+                addedToFavorites={addedToFavorites}
+              />
+            }
           ></Route>
           {/* <Route path="/character/:id" element={<Character />}></Route> */}
           <Route

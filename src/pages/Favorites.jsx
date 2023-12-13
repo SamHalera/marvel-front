@@ -23,7 +23,7 @@ const Favorites = ({
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/favorites?email=${user.email}&id=${user.id}`,
+          `${baseUrl}/favorites?email=${user.email}&id=${user._id}`,
         );
 
         console.log("response data====>", response.data);
@@ -101,7 +101,7 @@ const Favorites = ({
                 {data.map((favorite) => {
                   // console.log("favorite.user=>", favorite.user);
                   // console.log("userId=>", user.id);
-                  if (favorite.user === user.id) {
+                  if (favorite.user === user._id) {
                     // displayCharacters === favorite.label &&
                     if (displayCharacters === favorite.label) {
                       console.log("favorite id====>", favorite._id);
@@ -110,9 +110,6 @@ const Favorites = ({
                           key={favorite._id}
                           className="item my-5 flex w-1/2 flex-col gap-4 md:w-1/4 lg:w-1/6"
                         >
-                          <h3 className="text-xl text-white">
-                            {favorite.title || favorite.name}
-                          </h3>
                           <div className="image-wrapper">
                             <img
                               className=" h-72 w-64 object-cover object-center"
@@ -120,6 +117,9 @@ const Favorites = ({
                               alt=""
                             />
                           </div>
+                          <h3 className="text-xl text-white">
+                            {favorite.title || favorite.name}
+                          </h3>
                           <div className="favorites">
                             <FontAwesomeIcon
                               onClick={() => {

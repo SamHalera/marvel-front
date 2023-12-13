@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import baseUrl from "../api";
@@ -84,19 +84,25 @@ const Comics = ({
           <section className="list comics-list mt-10 flex flex-wrap justify-center gap-5">
             {data.results.map((result) => {
               return (
-                <article
+                <div
                   key={result._id}
-                  className="item comics-item my-5 flex h-auto w-1/2 flex-col gap-4 md:w-1/4 lg:w-1/6 "
+                  className="item comics-item my-5 flex h-auto w-1/2 flex-col gap-4  md:w-1/4 lg:w-1/6"
                 >
-                  <img
-                    className="h-52 w-52 object-cover object-center"
-                    src={`${result.thumbnail.path}/standard_fantastic.${result.thumbnail.extension}`}
-                    alt=""
-                  />
-                  <h2 className="text-2xl text-white">{result.title}</h2>
-                  <p className="text-white">
-                    {result.description && truncateStr(result.description, 120)}
-                  </p>
+                  <Link
+                    to={`/comic/${result._id}`}
+                    className="hover:opacity-50"
+                  >
+                    <img
+                      className="h-52 w-52 object-cover object-center"
+                      src={`${result.thumbnail.path}/standard_fantastic.${result.thumbnail.extension}`}
+                      alt=""
+                    />
+                    <h2 className="text-2xl text-white">{result.title}</h2>
+                    <p className="text-white">
+                      {result.description &&
+                        truncateStr(result.description, 120)}
+                    </p>
+                  </Link>
                   <div className="favorites">
                     {result.isFavorite ? (
                       <FontAwesomeIcon
@@ -120,7 +126,7 @@ const Comics = ({
                       />
                     )}
                   </div>
-                </article>
+                </div>
               );
             })}
           </section>
