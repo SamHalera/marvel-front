@@ -119,7 +119,43 @@ footer {
   background-color: transparent;
   color: white;
 }
-/*==rgb(46, 47, 67)-CHARACTERS=======*/
+
+/*=======HOME=======*/
+.hero {
+  background-image: url("../src//assets/images/bg-img-home.jpg");
+}
+
+.scroll {
+  transition: all 0.4s ease-in-out;
+  /* animation: scroll 1s infinite cubic-bezier(0.075, 0.82, 0.165, 1); */
+  animation: scroll 1s linear infinite alternate slidein;
+  bottom: 0;
+}
+.section-heroe {
+  background-image: url("../src//assets/images/bg-section-heroe.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-attachment: fixed;
+}
+@keyframes scroll {
+  0% {
+    bottom: 0;
+  }
+  30% {
+    bottom: 20px;
+  }
+
+  60% {
+    bottom: 40px;
+  }
+  80% {
+    bottom: 0;
+  }
+  100% {
+    bottom: 10px;
+  }
+}
+/*=======CHARACTERS=======*/
 .bg-img {
   height: 40vh;
   background-color: #161a3a;
@@ -199,4 +235,25 @@ main.form-container .overlay {
 }
 .form-wrapper a:hover {
   color: var(--color-primary);
+}
+.dialog-panel {
+  background-image: url("../src/assets/images/bg-login.jpg");
+  background-repeat: no-repeat;
+  background-position-x: 160px;
+  background-color: #030303;
+
+  background-size: cover;
+}
+@media (min-aspect-ratio: 16/9) {
+  .video {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .video {
+    width: auto;
+    height: 100%;
+  }
 }

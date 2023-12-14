@@ -72,6 +72,21 @@ export default function ProfileMenuHeadless({
                   onClick={() => {
                     setDisplayProfileSubmenu(false);
                   }}
+                  to="/favorites"
+                >
+                  <FontAwesomeIcon
+                    className="mr-4 text-2xl"
+                    icon="fa-solid fa-star"
+                  />
+                  My Favorites
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link
+                  className={`group mb-3 flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-900`}
+                  onClick={() => {
+                    setDisplayProfileSubmenu(false);
+                  }}
                   to="/profile"
                 >
                   <FontAwesomeIcon

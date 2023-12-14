@@ -34,6 +34,7 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
+import Home from "./pages/Home";
 
 library.add(
   fas,
@@ -57,7 +58,7 @@ function App() {
 
   const createUserCookies = (id, email, username, token, avatar) => {
     const user = {
-      id,
+      _id: id,
       email,
       username,
       token,
@@ -120,8 +121,9 @@ function App() {
           userCookies={userCookies}
         />
         <Routes>
+          <Route path="/" element={<Home truncateStr={truncateStr} />}></Route>
           <Route
-            path="/"
+            path="/characters"
             element={
               <Characters
                 handleAddFavorite={handleAddFavorite}

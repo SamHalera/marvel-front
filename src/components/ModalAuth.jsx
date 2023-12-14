@@ -34,7 +34,7 @@ const ModalAuth = ({ isOpen, setIsOpen, createUserCookies }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="shadow-3xl w-full max-w-md transform overflow-hidden rounded-2xl bg-[#202020] px-6 py-10 text-left align-middle transition-all">
+                <Dialog.Panel className="dialog-panel shadow-3xl w-full max-w-md transform overflow-hidden rounded-2xl px-6 py-10 text-left align-middle transition-all">
                   <Dialog.Title
                     as="h3"
                     className="mt-4 text-lg font-medium leading-8 text-white"

@@ -43,7 +43,7 @@ const Characters = ({
       const emailQuery = user ? `&email=${user.email}` : "";
       try {
         const response = await axios.get(
-          `${baseUrl}?name=${name}${emailQuery}&skip=${skip}`,
+          `${baseUrl}/characters?name=${name}${emailQuery}&skip=${skip}`,
         );
 
         setData(response.data);

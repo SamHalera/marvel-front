@@ -43,7 +43,7 @@ const Profile = ({ user, userCookies, setUserCookies }) => {
   ) : isLoading ? (
     <Loader />
   ) : (
-    <div className="main mt-40 flex h-screen flex-col">
+    <div className="main mb-11 mt-40 flex h-auto flex-col">
       <h1 className=" my-18 text-center text-4xl font-bold text-white">
         MY PROFILE
       </h1>

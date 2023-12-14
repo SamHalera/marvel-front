@@ -17,12 +17,12 @@ const Comic = ({
 
   const { id } = useParams();
   const navigate = useNavigate();
-
+  console.log("uerId==>", user._id);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/comic/${id}?userId=${user.id}`,
+          `${baseUrl}/comic/${id}?userId=${user._id}`,
         );
 
         setData(response.data);

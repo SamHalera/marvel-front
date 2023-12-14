@@ -36,6 +36,15 @@ const MobileNav = ({ setDisplayProfileSubmenu, userCookies, openModal }) => {
               navigate("/");
             }}
           >
+            Home
+          </span>
+          <span
+            className="text-3xl font-bold"
+            onClick={() => {
+              setDisplayMenu(false);
+              navigate("/characters");
+            }}
+          >
             Characters
           </span>
           <span
@@ -47,17 +56,7 @@ const MobileNav = ({ setDisplayProfileSubmenu, userCookies, openModal }) => {
           >
             Comics
           </span>
-          {userCookies ? (
-            <span
-              className="text-3xl font-bold"
-              onClick={() => {
-                setDisplayMenu(false);
-                navigate("/favorites");
-              }}
-            >
-              My Favorites
-            </span>
-          ) : (
+          {userCookies && (
             <>
               <Link to={"/signup"}>Signup</Link>
               <a

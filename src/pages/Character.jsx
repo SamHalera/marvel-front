@@ -26,7 +26,7 @@ const Character = ({
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/comics/${id}?userId=${user.id}`,
+          `${baseUrl}/comics/${id}?userId=${user._id}`,
         );
 
         console.log("rersponse.data =>", response.data);

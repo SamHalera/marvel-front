@@ -23,7 +23,7 @@ const Favorites = ({
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}/favorites?email=${user.email}&id=${user.id}`,
+          `${baseUrl}/favorites?email=${user.email}&id=${user._id}`,
         );
 
         console.log("response data====>", response.data);
@@ -41,7 +41,11 @@ const Favorites = ({
     return isLoading ? (
       <Loader />
     ) : (
-      <main className="favorites-main h-screen">
+      <main
+        className={`favorites-main ${
+          data.length === 0 ? "h-screen" : "h-auto"
+        }`}
+      >
         <h1 className=" my-32 text-center text-4xl font-bold text-white">
           My Favorites
         </h1>
@@ -101,7 +105,7 @@ const Favorites = ({
                 {data.map((favorite) => {
                   // console.log("favorite.user=>", favorite.user);
                   // console.log("userId=>", user.id);
-                  if (favorite.user === user.id) {
+                  if (favorite.user === user._id) {
                     // displayCharacters === favorite.label &&
                     if (displayCharacters === favorite.label) {
                       console.log("favorite id====>", favorite._id);
