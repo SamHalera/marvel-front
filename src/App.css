@@ -91,6 +91,17 @@ nav.nav-mobile span {
 .pagination input:focus {
   outline: none;
 }
+header {
+  background-image: linear-gradient(
+    to right top,
+    #161a3a,
+    #13162f,
+    #111224,
+    #0d0d1a,
+    #06060e
+  );
+}
+
 footer {
   background-image: linear-gradient(
     to right top,
@@ -108,7 +119,43 @@ footer {
   background-color: transparent;
   color: white;
 }
-/*==rgb(46, 47, 67)-CHARACTERS=======*/
+
+/*=======HOME=======*/
+.hero {
+  background-image: url("../src//assets/images/bg-img-home.jpg");
+}
+
+.scroll {
+  transition: all 0.4s ease-in-out;
+  /* animation: scroll 1s infinite cubic-bezier(0.075, 0.82, 0.165, 1); */
+  animation: scroll 1s linear infinite alternate slidein;
+  bottom: 0;
+}
+.section-heroe {
+  background-image: url("../src//assets/images/bg-section-heroe.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-attachment: fixed;
+}
+@keyframes scroll {
+  0% {
+    bottom: 0;
+  }
+  30% {
+    bottom: 20px;
+  }
+
+  60% {
+    bottom: 40px;
+  }
+  80% {
+    bottom: 0;
+  }
+  100% {
+    bottom: 10px;
+  }
+}
+/*=======CHARACTERS=======*/
 .bg-img {
   height: 40vh;
   background-color: #161a3a;
@@ -128,18 +175,18 @@ main.form-container .overlay {
 }
 /* Small devices such as large phones (640px and up) */
 /* @media only screen and (min-width: 40em) {...} */
-.form-wrapper {
+/* .form-wrapper {
   background-image: linear-gradient(
     to right top,
-    rgb(22 26 58 / 59%),
-    rgb(19 22 47 / 52%),
+    rgb(22 26 58 / 100%),
+    rgb(19 22 47 / 100%),
     #111224b3,
     #0d0d1a,
     #06060e
   );
-}
+} */
 .form-wrapper form input {
-  width: 300px;
+  /* width: 300px; */
   border: none;
   background-color: transparent;
   border-bottom: 1px solid var(--color-primary);
@@ -165,7 +212,7 @@ main.form-container .overlay {
 }
 
 .form-wrapper form button {
-  width: 150px;
+  width: 100px;
   border: 1px solid transparent;
   background: var(--color-primary);
   padding: 10px;
@@ -188,4 +235,25 @@ main.form-container .overlay {
 }
 .form-wrapper a:hover {
   color: var(--color-primary);
+}
+.dialog-panel {
+  background-image: url("../src/assets/images/bg-login.jpg");
+  background-repeat: no-repeat;
+  background-position-x: 160px;
+  background-color: #030303;
+
+  background-size: cover;
+}
+@media (min-aspect-ratio: 16/9) {
+  .video {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .video {
+    width: auto;
+    height: 100%;
+  }
 }

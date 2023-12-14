@@ -1,16 +1,28 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+
 // import Cookies from "js-cookie";
 import logo from "../../assets/images/logo.svg";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import ProfileMenu from "./ProfileMenu";
-const Header = ({ userCookies, handleRemoveUserCookies }) => {
+import ModalAuth from "../ModalAuth";
+import ProfileMenuHeadless from "./ProfileMenuHeadless";
+const Header = ({
+  userCookies,
+  handleRemoveUserCookies,
+  createUserCookies,
+  user,
+}) => {
   const [displayProfileSubmenu, setDisplayProfileSubmenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const refProfile = useRef();
+  console.log(user);
+  const openModal = () => {
+    setIsOpen(true);
+  };
   const handleClickWindow = (event) => {
     if (refProfile.current && !refProfile.current.contains(event.target)) {
       setDisplayProfileSubmenu(false);
@@ -25,49 +37,53 @@ const Header = ({ userCookies, handleRemoveUserCookies }) => {
     };
   }, []);
   return (
-    <header className="flex w-full items-center justify-between px-12 py-5">
-      {userCookies && (
-        <MobileNav
-          handleRemoveUserCookies={handleRemoveUserCookies}
-          setDisplayProfileSubmenu={setDisplayProfileSubmenu}
-        />
-      )}
+    <header className="fixed top-0 z-40 flex w-full items-center justify-between px-12 py-5">
+      <ModalAuth
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        createUserCookies={createUserCookies}
+      />
+      <MobileNav
+        handleRemoveUserCookies={handleRemoveUserCookies}
+        setDisplayProfileSubmenu={setDisplayProfileSubmenu}
+        userCookies={userCookies}
+        openModal={openModal}
+      />
 
       <img
         onClick={() => {
-          if (!userCookies) {
-            navigate("/login");
-          } else {
-            navigate("/");
-          }
+          navigate("/");
         }}
         className="logo w-24 md:w-36"
         src={logo}
         alt=""
       />
 
-      {userCookies ? (
-        <div className="flex justify-between">
-          <DesktopNav
-            displayProfileSubmenu={displayProfileSubmenu}
-            setDisplayProfileSubmenu={setDisplayProfileSubmenu}
-          />
-          <ProfileMenu
+      <div className="flex justify-between">
+        <DesktopNav
+          displayProfileSubmenu={displayProfileSubmenu}
+          setDisplayProfileSubmenu={setDisplayProfileSubmenu}
+          userCookies={userCookies}
+          openModal={openModal}
+        />
+
+        {userCookies && (
+          <ProfileMenuHeadless
             refProfile={refProfile}
             displayProfileSubmenu={displayProfileSubmenu}
             setDisplayProfileSubmenu={setDisplayProfileSubmenu}
             handleRemoveUserCookies={handleRemoveUserCookies}
+            user={user}
+            userCookies={userCookies}
           />
-        </div>
-      ) : (
-        <nav
-          className="flex items-center
-         text-white"
-        >
-          <Link to={"/signup"}>Signup</Link>
-          <Link to={"/login"}>Login</Link>
-        </nav>
-      )}
+          // <ProfileMenu
+          //   refProfile={refProfile}
+          //   displayProfileSubmenu={displayProfileSubmenu}
+          //   setDisplayProfileSubmenu={setDisplayProfileSubmenu}
+          //   handleRemoveUserCookies={handleRemoveUserCookies}
+          // />
+        )}
+      </div>
     </header>
   );
 };

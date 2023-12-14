@@ -1,9 +1,19 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import baseUrl from "../api";
+import Loader from "../components/Loader";
+import FavoritesComponent from "../components/FavoritesComponent";
+import ComicsCarousel from "../components/ComicsCarousel";
 
-const Character = (userCookies) => {
+const Character = ({
+  user,
+  userCookies,
+  handleAddFavorite,
+  handleRemoveFavorite,
+  addedToFavorites,
+}) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -11,11 +21,13 @@ const Character = (userCookies) => {
   const id = params.characterId;
   // const location = useLocation();
   // const { id } = location.state;
-
+  // console.log("user id===>", user._id);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/comics/${id}`);
+        const response = await axios.get(
+          `${baseUrl}/comics/${id}?userId=${user._id}`,
+        );
 
         console.log("rersponse.data =>", response.data);
         setData(response.data);
@@ -26,42 +38,45 @@ const Character = (userCookies) => {
     };
 
     fetchData();
-  }, []);
+  }, [addedToFavorites]);
   if (!userCookies) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   } else {
     return isLoading ? (
-      <div className="loader">LOADING</div>
+      <Loader />
     ) : (
-      <main className="one-character-main">
-        <div className="container">
+      <main className="one-character-main my-48">
+        <div className="container mx-auto">
           <section className="character-wrapper">
-            <article key={data.name} className="character">
-              <div className="info-character">
+            <h2 className="mb-9 text-center text-3xl font-bold text-white">
+              {data.name}
+            </h2>
+            <article
+              key={data.name}
+              className="character flex flex-col items-center"
+            >
+              <div className="info-character mb-14 flex items-end justify-center gap-8">
                 <img
-                  src={`${data.thumbnail.path}/standard_xlarge.${data.thumbnail.extension}`}
+                  className=" w-80"
+                  src={`${data.thumbnail.path}.${data.thumbnail.extension}`}
                   alt=""
                 />
-                <h2>{data.name}</h2>
-                <p>{data.description}</p>
-                <p className="">
-                  You can find {data.name} in these beside {data.comics.length}{" "}
-                  comics
-                </p>
+                <div className=" w-2/5 text-xl leading-8 text-white">
+                  <p className="">{data.description}</p>
+                  <p className="font-bold">
+                    You can find {data.name} in these beside{" "}
+                    {data.comics.length} comics
+                  </p>
+                  <FavoritesComponent
+                    item={data}
+                    label="character"
+                    userCookies={userCookies}
+                    handleAddFavorite={handleAddFavorite}
+                    handleRemoveFavorite={handleRemoveFavorite}
+                  />
+                </div>
               </div>
-              <div className="list-of-comics">
-                {data.comics.map((comic) => {
-                  return (
-                    <article key={comic._id}>
-                      <img
-                        src={`${comic.thumbnail.path}/standard_fantastic.${data.thumbnail.extension}`}
-                        alt=""
-                      />
-                      <h3>{comic.title}</h3>
-                    </article>
-                  );
-                })}
-              </div>
+              <ComicsCarousel data={data} />
             </article>
           </section>
         </div>

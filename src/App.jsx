@@ -3,11 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  fas,
+  faUser,
+  faBars,
+  faPlus,
+  faIdCardClip,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
   faStar,
   faCircleXmark,
+  faEye,
+  faEyeSlash,
 } from "@fortawesome/free-regular-svg-icons";
 import baseUrl from "./api";
 //assets
@@ -20,18 +28,27 @@ import Header from "./components/Header/Header";
 import Characters from "./pages/Characters";
 import Character from "./pages/Character";
 import Comics from "./pages/Comics";
+import Comic from "./pages/Comic";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
+import Home from "./pages/Home";
 
-library.add(fas, faUser, faBars, faCircleXmark, faStar, faHeart);
+library.add(
+  fas,
+  faUser,
+  faBars,
+  faCircleXmark,
+  faStar,
+  faHeart,
+  faPlus,
+  faIdCardClip,
+  faEye,
+  faEyeSlash,
+);
 function App() {
-  // const [token, setToken] = useState(Cookies.get("token") || null);
-  // const [userId, setUserId] = useState(Cookies.get("userId") || null);
-  // const [emailCookie, setEmailCookie] = useState(Cookies.get("email") || null);
-
   const [addedToFavorites, setAddedToFavorites] = useState(false);
 
   const [displayCharacters, setDisplayCharacters] = useState("character");
@@ -39,12 +56,13 @@ function App() {
 
   const user = userCookies && JSON.parse(Cookies.get("user"));
 
-  const createUserCookies = (id, email, username, token) => {
+  const createUserCookies = (id, email, username, token, avatar) => {
     const user = {
-      id,
+      _id: id,
       email,
       username,
       token,
+      avatar,
     };
     Cookies.set("user", JSON.stringify(user), { expires: 15 });
     setUserCookies(JSON.parse(Cookies.get("user")));
@@ -91,16 +109,21 @@ function App() {
     }
   };
 
+  console.log("user===>", user);
+  console.log("userCookies====>", userCookies);
   return (
     <>
       <Router>
         <Header
-          userCookies={userCookies}
           handleRemoveUserCookies={handleRemoveUserCookies}
+          createUserCookies={createUserCookies}
+          user={user}
+          userCookies={userCookies}
         />
         <Routes>
+          <Route path="/" element={<Home truncateStr={truncateStr} />}></Route>
           <Route
-            path="/"
+            path="/characters"
             element={
               <Characters
                 handleAddFavorite={handleAddFavorite}
@@ -109,6 +132,7 @@ function App() {
                 truncateStr={truncateStr}
                 userCookies={userCookies}
                 user={user}
+                createUserCookies={createUserCookies}
               />
             }
           ></Route>
@@ -122,12 +146,33 @@ function App() {
                 addedToFavorites={addedToFavorites}
                 truncateStr={truncateStr}
                 user={user}
+                createUserCookies={createUserCookies}
               />
             }
           ></Route>
           <Route
             path="/comics/:characterId"
-            element={<Character userCookies={userCookies} user={user} />}
+            element={
+              <Character
+                userCookies={userCookies}
+                user={user}
+                handleAddFavorite={handleAddFavorite}
+                handleRemoveFavorite={handleRemoveFavorite}
+                addedToFavorites={addedToFavorites}
+              />
+            }
+          ></Route>
+          <Route
+            path="/comic/:id"
+            element={
+              <Comic
+                user={user}
+                userCookies={userCookies}
+                handleAddFavorite={handleAddFavorite}
+                handleRemoveFavorite={handleRemoveFavorite}
+                addedToFavorites={addedToFavorites}
+              />
+            }
           ></Route>
           {/* <Route path="/character/:id" element={<Character />}></Route> */}
           <Route
@@ -147,16 +192,22 @@ function App() {
           ></Route>
           <Route
             path="/profile"
-            element={<Profile user={user} userCookies={userCookies} />}
+            element={
+              <Profile
+                user={user}
+                userCookies={userCookies}
+                setUserCookies={setUserCookies}
+              />
+            }
           ></Route>
           <Route
             path="/signup"
             element={<Signup createUserCookies={createUserCookies} />}
           ></Route>
-          <Route
+          {/* <Route
             path="/login"
             element={<Login createUserCookies={createUserCookies} />}
-          ></Route>
+          ></Route> */}
         </Routes>
         <Footer />
       </Router>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
+const MobileNav = ({ setDisplayProfileSubmenu, userCookies, openModal }) => {
   const [displayMenu, setDisplayMenu] = useState(false);
   const navigate = useNavigate();
   return (
@@ -20,7 +20,6 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
         {displayMenu && (
           <FontAwesomeIcon
             className="absolute left-8 top-8  z-40 text-3xl text-white"
-            right-3
             onClick={() => {
               setDisplayMenu(false);
             }}
@@ -37,6 +36,15 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
               navigate("/");
             }}
           >
+            Home
+          </span>
+          <span
+            className="text-3xl font-bold"
+            onClick={() => {
+              setDisplayMenu(false);
+              navigate("/characters");
+            }}
+          >
             Characters
           </span>
           <span
@@ -48,16 +56,21 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
           >
             Comics
           </span>
-          <span
-            className="text-3xl font-bold"
-            onClick={() => {
-              setDisplayMenu(false);
-              navigate("/favorites");
-            }}
-          >
-            My Favorites
-          </span>
-          <button
+          {userCookies && (
+            <>
+              <Link to={"/signup"}>Signup</Link>
+              <a
+                onClick={() => {
+                  setDisplayMenu(false);
+                  openModal();
+                }}
+              >
+                Login
+              </a>
+            </>
+          )}
+
+          {/* <button
             onClick={() => {
               handleRemoveUserCookies();
               setDisplayMenu(false);
@@ -67,7 +80,7 @@ const MobileNav = ({ handleRemoveUserCookies, setDisplayProfileSubmenu }) => {
             className="btn-logout"
           >
             Logout
-          </button>
+          </button> */}
         </nav>
       )}
     </div>
