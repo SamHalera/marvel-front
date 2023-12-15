@@ -6,12 +6,21 @@ import baseUrl from "../api";
 
 // import spinnerLogin from "../assets/images/spinner-login.gif";
 
-const LoginForm = ({ action, apiURL, createUserCookies, closeModal }) => {
+const LoginForm = ({
+  action,
+  apiURL,
+  createUserCookies,
+  closeModal,
+  error,
+  setError,
+  errorMessage,
+  setErrorMessage,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [username, setUsername] = useState("");
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [error, setError] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -41,16 +50,12 @@ const LoginForm = ({ action, apiURL, createUserCookies, closeModal }) => {
       closeModal();
       // navigate("/");
     } catch (error) {
-      console.log(error.response.status);
+      console.log(error.response);
       setError(true);
 
       if (error.response.data.message === "All fields are required!") {
         // Je met à jour mon state errorMessage
         setErrorMessage("Please fill in all fields");
-      } else if (error.response.data.message === "This email already exists!") {
-        setErrorMessage(
-          "This email already has an account, please use another one :)",
-        );
       } else if (error.response.status === 401) {
         setErrorMessage("Your credentials are not valid");
       }
