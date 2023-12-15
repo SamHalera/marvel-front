@@ -4,7 +4,7 @@ const SearchBar = ({ setValue, setSkip, value, label }) => {
       <span className="mb-5 mt-5 text-3xl text-white">
         Find your favorite {label}
       </span>
-      <div className="input-wrapper w-2/4">
+      <div className="input-wrapper w-full lg:w-2/4">
         <input
           className=" w-full border border-solid border-red-500  bg-transparent  px-5 py-2 text-xl text-white"
           onChange={(event) => {
