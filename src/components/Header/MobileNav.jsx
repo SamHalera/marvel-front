@@ -56,7 +56,7 @@ const MobileNav = ({ setDisplayProfileSubmenu, userCookies, openModal }) => {
           >
             Comics
           </span>
-          {userCookies && (
+          {!userCookies && (
             <>
               <Link to={"/signup"}>Signup</Link>
               <a
