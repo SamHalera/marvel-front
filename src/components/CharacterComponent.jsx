@@ -10,7 +10,7 @@ const CharacterComponent = ({
   truncateStr,
 }) => {
   return (
-    <article className="item character-item gap-4md:w-48 my-5 flex w-72 flex-col md:flex-1">
+    <article className="item character-item my-5 flex w-72 flex-col gap-4 md:w-48 md:flex-1">
       {userCookies ? (
         <Link className="" to={`/comics/${character._id}`}>
           <img
