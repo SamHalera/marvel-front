@@ -8,7 +8,7 @@ const DesktopNav = ({
   openModal,
 }) => {
   return (
-    <nav className="nav-desktop mr-5 hidden items-center gap-3 md:flex">
+    <nav className="nav-desktop mr-5 hidden items-center gap-2 md:flex">
       <Link to="/">Home</Link>
       <Link to="/characters">Characters</Link>
       <Link to="/comics">Comics</Link>

@@ -7,7 +7,7 @@
 }
 html {
   scroll-behavior: smooth;
-  transition: all 0.6s ease-in-out;
+  transition: all 1s ease-in-out;
 }
 
 body {
@@ -125,34 +125,42 @@ footer {
   background-image: url("../src//assets/images/bg-img-home.jpg");
 }
 
-.scroll {
+.section-heroe {
+  background-image: url("../src//assets/images/poster.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.scroll > div {
   transition: all 0.4s ease-in-out;
   /* animation: scroll 1s infinite cubic-bezier(0.075, 0.82, 0.165, 1); */
-  animation: scroll 1s linear infinite alternate slidein;
-  bottom: 0;
-}
-.section-heroe {
-  background-image: url("../src//assets/images/bg-section-heroe.jpg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-attachment: fixed;
+  /* animation: 1s scroll linear infinite alternate slidein; */
+  animation: 3s scroll linear 1s infinite alternate;
+  position: absolute;
+  left: 13px;
 }
 @keyframes scroll {
   0% {
-    bottom: 0;
+    opacity: 0.2;
+    top: 16px;
   }
   30% {
-    bottom: 20px;
+    opacity: 0.6;
+    top: 20px;
   }
 
   60% {
-    bottom: 40px;
+    opacity: 1;
+    top: 24px;
   }
   80% {
-    bottom: 0;
+    opacity: 0.6;
+    top: 20px;
   }
   100% {
-    bottom: 10px;
+    opacity: 0.2;
+    top: 18px;
   }
 }
 /*=======CHARACTERS=======*/

@@ -53,6 +53,7 @@ function App() {
 
   const [displayCharacters, setDisplayCharacters] = useState("character");
   const [userCookies, setUserCookies] = useState(Cookies.get("user") || null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const user = userCookies && JSON.parse(Cookies.get("user"));
 
@@ -109,6 +110,10 @@ function App() {
     }
   };
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
   console.log("user===>", user);
   console.log("userCookies====>", userCookies);
   return (
@@ -121,7 +126,12 @@ function App() {
           userCookies={userCookies}
         />
         <Routes>
-          <Route path="/" element={<Home truncateStr={truncateStr} />}></Route>
+          <Route
+            path="/"
+            element={
+              <Home truncateStr={truncateStr} userCookies={userCookies} />
+            }
+          ></Route>
           <Route
             path="/characters"
             element={
