@@ -1,8 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import LoginForm from "./LoginForm";
 const ModalAuth = ({ isOpen, setIsOpen, createUserCookies }) => {
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   function closeModal() {
     setIsOpen(false);
   }
@@ -48,6 +50,10 @@ const ModalAuth = ({ isOpen, setIsOpen, createUserCookies }) => {
                     apiURL="user/login"
                     createUserCookies={createUserCookies}
                     closeModal={closeModal}
+                    error={error}
+                    setError={setError}
+                    errorMessage={errorMessage}
+                    setErrorMessage={setErrorMessage}
                   />
 
                   <div className="mt-4 flex justify-end">
