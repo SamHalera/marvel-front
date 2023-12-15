@@ -40,18 +40,18 @@ const Comic = ({
   ) : isLoading ? (
     <Loader />
   ) : (
-    <main className="container mx-auto mt-44 h-screen">
-      <h1 className="mb-10 text-center text-3xl font-bold text-white">
+    <main className="container mx-auto mb-20 mt-44 h-auto lg:h-screen">
+      <h1 className="mb-8 text-center text-3xl font-bold text-white lg:mb-10">
         {data.title}
       </h1>
-      <div className="flex items-center gap-8">
+      <div className="flex flex-col items-center gap-8 lg:flex-row">
         <img
-          className="mb-2 w-96"
+          className="mb-2 w-64 lg:w-96"
           src={`${data.thumbnail.path}.${data.thumbnail.extension}`}
           alt=""
         />
-        <div>
-          <p className="mb-9 w-2/4 text-xl leading-8 text-white">
+        <div className="px-10">
+          <p className="mb-9  text-xl leading-8 text-white lg:w-2/4">
             {data.description}
           </p>
 

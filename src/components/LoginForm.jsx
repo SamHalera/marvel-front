@@ -115,11 +115,15 @@ const LoginForm = ({
         </button>
       </form>
       <div className="boutons">
-        {action === "signup" ? (
-          <Link to="/login">Already an account? Log in</Link>
-        ) : (
-          <Link to="/signup">Not a member yet? Sign up for free</Link>
-        )}
+        <div
+          className=" cursor-pointer font-bold text-white transition-all duration-500 ease-in-out hover:text-[#ed1d24]"
+          onClick={() => {
+            closeModal();
+            navigate("/signup");
+          }}
+        >
+          Not a member yet? Sign up for free
+        </div>
       </div>
     </div>
   );
