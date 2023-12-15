@@ -15,20 +15,23 @@ const FavoritesComponent = ({
           onClick={() => {
             handleRemoveFavorite(item._id, label);
           }}
-          icon="fa-solid fa-star"
+          icon="fa-solid fa-heart"
         />
       ) : (
-        <FontAwesomeIcon
-          className="cursor-pointer text-2xl text-white"
-          onClick={() => {
-            if (userCookies) {
-              handleAddFavorite(item._id, label);
-            } else {
-              openModal();
-            }
-          }}
-          icon="fa-regular fa-star"
-        />
+        <>
+          <FontAwesomeIcon
+            className="cursor-pointer text-2xl text-white"
+            onClick={() => {
+              if (userCookies) {
+                handleAddFavorite(item._id, label);
+              } else {
+                openModal();
+              }
+            }}
+            icon="fa-regular fa-heart"
+          />
+          <span className="ml-4 text-xs text-white">add to favorites</span>
+        </>
       )}
     </div>
   );
