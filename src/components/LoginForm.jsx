@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 // import Cookies from "js-cookie";
 import axios from "axios";
 import baseUrl from "../api";
@@ -23,6 +23,9 @@ const LoginForm = ({
   // const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location.pathname);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +38,7 @@ const LoginForm = ({
         email,
         password,
       });
-
+      console.log("response==>", response.data);
       const token = response.data.token;
       const userId = response.data._id;
       const emailCookie = response.data.email;
@@ -48,7 +51,9 @@ const LoginForm = ({
       setPassword("");
       // setUsername("");
       closeModal();
-      // navigate("/");
+      if (location.pathname === "/signup") {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error.response);
       setError(true);

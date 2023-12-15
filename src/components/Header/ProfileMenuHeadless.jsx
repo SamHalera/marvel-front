@@ -13,7 +13,7 @@ export default function ProfileMenuHeadless({
   user,
   userCookies,
 }) {
-  const [userAvatar, setUserAvatar] = useState();
+  const [userAvatar, setUserAvatar] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +25,12 @@ export default function ProfileMenuHeadless({
           },
         });
 
-        setUserAvatar(response.data.avatar.secure_url);
+        if (response.data.avatar) {
+          console.log("response.data.avatar");
+          setUserAvatar(response.data.avatar.secure_url);
+        } else {
+          console.log("NO response.data.avatar");
+        }
       } catch (error) {
         console.log(error, "<=====message error");
       }

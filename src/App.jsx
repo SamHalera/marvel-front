@@ -58,6 +58,7 @@ function App() {
   const user = userCookies && JSON.parse(Cookies.get("user"));
 
   const createUserCookies = (id, email, username, token, avatar) => {
+    console.log("avatar==>", avatar);
     const user = {
       _id: id,
       email,
