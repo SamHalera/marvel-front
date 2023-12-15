@@ -39,7 +39,7 @@ const LoginForm = ({ action, apiURL, createUserCookies, closeModal }) => {
       setPassword("");
       // setUsername("");
       closeModal();
-      navigate("/");
+      // navigate("/");
     } catch (error) {
       console.log(error.response.status);
       setError(true);

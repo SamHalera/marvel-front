@@ -62,7 +62,7 @@ const Characters = ({
 
   return (
     <main className="characters-main">
-      <section className="bg-img bg-settings">
+      <section className="bg-img bg-settings p-[1px]">
         <div className="overlay bg flex h-[40vh] w-full items-center justify-center bg-black bg-opacity-60"></div>
       </section>
 
