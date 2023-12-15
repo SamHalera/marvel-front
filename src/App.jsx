@@ -35,6 +35,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import Lab from "./pages/Lab";
 
 library.add(
   fas,
@@ -127,6 +128,7 @@ function App() {
           userCookies={userCookies}
         />
         <Routes>
+          <Route path="/lab" element={<Lab />}></Route>
           <Route
             path="/"
             element={

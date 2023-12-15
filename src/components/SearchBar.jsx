@@ -4,9 +4,9 @@ const SearchBar = ({ setValue, setSkip, value, label }) => {
       <span className="mb-5 mt-5 text-3xl text-white">
         Find your favorite {label}
       </span>
-      <div className="input-wrapper">
+      <div className="input-wrapper w-2/4">
         <input
-          className=" border border-solid border-red-500 bg-transparent  px-5  py-2 text-xl text-white"
+          className=" w-full border border-solid border-red-500  bg-transparent  px-5 py-2 text-xl text-white"
           onChange={(event) => {
             setValue(event.target.value);
 
@@ -14,6 +14,11 @@ const SearchBar = ({ setValue, setSkip, value, label }) => {
           }}
           type="text"
           id="name"
+          placeholder={`${
+            label === "heroe"
+              ? "Write your heroe's name"
+              : "Write a comic's title"
+          }`}
           value={value}
         />
       </div>
