@@ -161,7 +161,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/comics/:characterId"
+            path="/character/:characterId"
             element={
               <Character
                 userCookies={userCookies}

@@ -55,13 +55,13 @@ const Character = ({
               key={data.name}
               className="character flex flex-col items-center"
             >
-              <div className="info-character mb-14 flex items-end justify-center gap-8">
+              <div className="info-character mb-14 flex flex-col items-center justify-center gap-8  lg:flex-row lg:items-end">
                 <img
-                  className=" w-80"
+                  className=" w-72 lg:w-80"
                   src={`${data.thumbnail.path}.${data.thumbnail.extension}`}
                   alt=""
                 />
-                <div className=" w-2/5 text-xl leading-8 text-white">
+                <div className="w-full p-8 text-xl leading-8 text-white lg:w-2/5">
                   <p className="">{data.description}</p>
                   <p className="font-bold">
                     You can find {data.name} in these beside{" "}
