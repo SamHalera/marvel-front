@@ -10,11 +10,11 @@ const ComicComponent = ({
   truncateStr,
 }) => {
   return (
-    <article className="item comics-item w-2/2 my-5 flex flex-col gap-4  md:w-1/4 lg:w-1/6">
+    <article className="item comics-item my-5 flex w-72 flex-col gap-4 md:w-48 md:flex-1">
       {userCookies ? (
         <Link to={`/comic/${comic._id}`} className="hover:opacity-50">
           <img
-            className="h-72 w-72 object-cover object-center"
+            className="w-full object-cover object-center"
             src={`${comic.thumbnail.path}/standard_fantastic.${comic.thumbnail.extension}`}
             alt=""
           />
@@ -31,7 +31,7 @@ const ComicComponent = ({
           className="cursor-pointer transition-all duration-500 ease-in-out hover:opacity-50"
         >
           <img
-            className="h-52 w-52 object-cover object-center"
+            className="w-full object-cover object-center"
             src={`${comic.thumbnail.path}/standard_fantastic.${comic.thumbnail.extension}`}
             alt=""
           />
