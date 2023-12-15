@@ -247,21 +247,8 @@ main.form-container .overlay {
 .dialog-panel {
   background-image: url("../src/assets/images/bg-login.jpg");
   background-repeat: no-repeat;
-  background-position-x: 160px;
+  /* background-position-x: 160px; */
   background-color: #030303;
 
   background-size: cover;
-}
-@media (min-aspect-ratio: 16/9) {
-  .video {
-    width: 100%;
-    height: auto;
-  }
-}
-
-@media (max-aspect-ratio: 16/9) {
-  .video {
-    width: auto;
-    height: 100%;
-  }
 }
