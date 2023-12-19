@@ -61,7 +61,7 @@ const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
           </div>
           <a
             href="#first-section"
-            className="scroll absolute bottom-5 flex h-12 w-8  cursor-pointer items-center justify-center rounded-[33px] border border-solid border-red-500"
+            className="scroll absolute bottom-12 flex h-12 w-8  cursor-pointer items-center justify-center rounded-[33px] border border-solid border-red-500"
           >
             <div className=" h-2 w-1  rounded-full bg-red-500"></div>
           </a>
