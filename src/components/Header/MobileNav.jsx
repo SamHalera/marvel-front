@@ -58,7 +58,14 @@ const MobileNav = ({ setDisplayProfileSubmenu, userCookies, openModal }) => {
           </span>
           {!userCookies && (
             <>
-              <Link to={"/signup"}>Signup</Link>
+              <Link
+                onClick={() => {
+                  setDisplayMenu(false);
+                }}
+                to={"/signup"}
+              >
+                Signup
+              </Link>
               <a
                 onClick={() => {
                   setDisplayMenu(false);

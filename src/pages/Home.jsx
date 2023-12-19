@@ -51,7 +51,7 @@ const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
       <div className="hero bg-settings mb-10 h-screen w-full p-[1px]">
         <div className="relative z-0 flex h-screen w-full flex-col items-center justify-center bg-neutral-950 bg-opacity-80 ">
           <div className="m-5">
-            <h1 className=" mb-8 flex flex-col gap-3  text-5xl font-bold uppercase text-white">
+            <h1 className=" mb-8 flex flex-col gap-3  text-4xl font-bold uppercase text-white md:text-5xl">
               Welcome to the
               <span className="red"> Marvelous World of Marvel</span>
             </h1>
