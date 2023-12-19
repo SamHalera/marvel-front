@@ -103,10 +103,7 @@ const Favorites = ({
             <div className="container m-auto">
               <section className="list favorites-list mt-10 flex flex-wrap justify-center gap-5">
                 {data.map((favorite) => {
-                  // console.log("favorite.user=>", favorite.user);
-                  // console.log("userId=>", user.id);
                   if (favorite.user === user._id) {
-                    // displayCharacters === favorite.label &&
                     if (displayCharacters === favorite.label) {
                       console.log("favorite id====>", favorite._id);
                       return (
@@ -133,14 +130,8 @@ const Favorites = ({
                                 );
                               }}
                               className="cursor-pointer text-2xl text-[#ed1d24]"
-                              icon="fa-solid fa-star"
+                              icon="fa-solid fa-heart"
                             />
-                            {/* <i
-                              onClick={() => {
-                                handleRemoveFavorite(favorite._id, "character");
-                              }}
-                              className="fas fa-star"
-                            ></i> */}
                           </div>
                         </article>
                       );

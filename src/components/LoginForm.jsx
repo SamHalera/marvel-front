@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 // import Cookies from "js-cookie";
 import axios from "axios";
 import baseUrl from "../api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // import spinnerLogin from "../assets/images/spinner-login.gif";
 
@@ -18,9 +19,7 @@ const LoginForm = ({
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [error, setError] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState("");
+  const [showPass, setShowPass] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,7 +33,6 @@ const LoginForm = ({
 
     try {
       const response = await axios.post(`${baseUrl}/${apiURL}`, {
-        // username,
         email,
         password,
       });
@@ -49,7 +47,6 @@ const LoginForm = ({
 
       setEmail("");
       setPassword("");
-      // setUsername("");
       closeModal();
       if (location.pathname === "/signup") {
         navigate("/");
@@ -59,7 +56,6 @@ const LoginForm = ({
       setError(true);
 
       if (error.response.data.message === "All fields are required!") {
-        // Je met à jour mon state errorMessage
         setErrorMessage("Please fill in all fields");
       } else if (error.response.status === 401) {
         setErrorMessage("Your credentials are not valid");
@@ -80,16 +76,6 @@ const LoginForm = ({
         </h2>
         {error && <p className="red">{errorMessage}</p>}
 
-        {/* <input
-          onChange={(event) => {
-            setUsername(event.target.value);
-          }}
-          type="text"
-          id="username"
-          placeholder="Username"
-          value={username}
-        /> */}
-
         <input
           onChange={(event) => {
             setEmail(event.target.value);
@@ -103,18 +89,42 @@ const LoginForm = ({
           className="w-full"
         />
 
-        <input
-          onChange={(event) => {
-            setPassword(event.target.value);
-            setError(false);
-            setErrorMessage("");
-          }}
-          type="password"
-          id="password"
-          placeholder="Password"
-          value={password}
-          className="w-full"
-        />
+        <div className="relative">
+          <input
+            onChange={(event) => {
+              setPassword(event.target.value);
+              setError(false);
+              setErrorMessage("");
+            }}
+            type={`${showPass ? "text" : "password"}`}
+            id="password"
+            placeholder="Password"
+            value={password}
+            className="w-full"
+          />
+
+          {showPass ? (
+            <FontAwesomeIcon
+              onClick={() => {
+                setShowPass(false);
+              }}
+              className="absolute right-10 top-8 cursor-pointer text-xl text-white"
+              icon="fa-regular fa-eye-slash"
+            />
+          ) : (
+            <FontAwesomeIcon
+              onClick={() => {
+                if (password) {
+                  setShowPass(true);
+                }
+              }}
+              className={`absolute right-10 top-8  text-xl ${
+                password ? "cursor-pointer text-white" : "text-gray-500"
+              } `}
+              icon="fa-regular fa-eye"
+            />
+          )}
+        </div>
         <button className="mt-2" type="submit">
           Log in
         </button>

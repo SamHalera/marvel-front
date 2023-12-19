@@ -5,6 +5,7 @@ import baseUrl from "../api";
 import Loader from "../components/Loader";
 import ItemCarousel from "../components/ItemCarousel";
 import ItemCarouselHome from "../components/ItemCarouselHome";
+import ScrollToTop from "../components/ScrollToTop";
 
 const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
   const [characters, setChararcters] = useState();
@@ -42,6 +43,7 @@ const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
     };
     fetchData();
   }, []);
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -69,7 +71,7 @@ const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
         id="first-section"
         className="relative my-10  h-auto w-full lg:h-screen"
       >
-        <div className="right-[400px] top-[100px] mb-8 flex flex-col items-center lg:absolute">
+        <div className="right-[400px] top-[60px] mb-8 flex flex-col items-center lg:absolute">
           <h2 className="mb-6 flex flex-col gap-3 text-3xl font-bold uppercase text-white lg:text-5xl">
             Dive into the <span className="red">Marvel Universe</span>
           </h2>
@@ -82,7 +84,7 @@ const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
             DISCOVER
           </button>
         </div>
-        <div className="left-[300px] top-[300px] mx-auto lg:absolute">
+        <div className="left-[300px] top-[200px] mx-auto lg:absolute">
           <div className="relative flex flex-col items-center justify-center md:flex-row">
             <div className="lg:absolute  lg:left-[0px]  lg:top-[0px] lg:h-[450px] lg:w-[350px]">
               <div className="">
@@ -129,7 +131,7 @@ const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
                 DISCOVER
               </button>
             </div>
-            <div className="carousel md:4/6 lg:w-6/6 w-5/5 flex h-80 overflow-scroll">
+            <div className="carousel hide-scroll-bar md:4/6 lg:w-6/6 w-5/5 flex h-80 overflow-scroll">
               {characters.results.map((oneCharacter) => {
                 return (
                   <ItemCarouselHome
