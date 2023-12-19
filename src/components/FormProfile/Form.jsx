@@ -72,7 +72,7 @@ const Form = ({
         handleSubmit(event);
       }}
       action=""
-      className="mx-auto flex w-1/3 flex-col gap-5"
+      className="w-3/3 mx-auto flex flex-col gap-5 lg:w-2/3"
     >
       <ImageUpload picture={picture} data={data} setPicture={setPicture} />
       <Title data={data} />
@@ -89,17 +89,6 @@ const Form = ({
         type="text"
         placeholder="Username"
       />
-      {/* <input
-        onChange={(event) => {
-          setError(false);
-          setErrorMessage("");
-          setUsername(event.target.value);
-        }}
-        type="text"
-        id="username"
-        placeholder="Username"
-        value={username ? username : data.username}
-      /> */}
 
       <InputPass
         setError={setError}

@@ -30,7 +30,7 @@ const FavoritesComponent = ({
             }}
             icon="fa-regular fa-heart"
           />
-          <span className="ml-4 text-xs text-white">add to favorites</span>
+          <span className="ml-2 text-xs text-white">add to favorites</span>
         </>
       )}
     </div>

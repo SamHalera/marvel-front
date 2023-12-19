@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -9,6 +9,7 @@ import {
   faBars,
   faPlus,
   faIdCardClip,
+  faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
@@ -36,6 +37,7 @@ import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Lab from "./pages/Lab";
+import ScrollToTop from "./components/ScrollToTop";
 
 library.add(
   fas,
@@ -48,6 +50,7 @@ library.add(
   faIdCardClip,
   faEye,
   faEyeSlash,
+  faChevronUp,
 );
 function App() {
   const [addedToFavorites, setAddedToFavorites] = useState(false);
@@ -55,6 +58,7 @@ function App() {
   const [displayCharacters, setDisplayCharacters] = useState("character");
   const [userCookies, setUserCookies] = useState(Cookies.get("user") || null);
   const [isOpen, setIsOpen] = useState(false);
+  const [scrollToTopHidden, setScrollToTopHidden] = useState(true);
 
   const user = userCookies && JSON.parse(Cookies.get("user"));
 
@@ -118,6 +122,22 @@ function App() {
 
   console.log("user===>", user);
   console.log("userCookies====>", userCookies);
+
+  useEffect(() => {
+    const handleScrollToTop = () => {
+      if (window.scrollY > 400) {
+        setScrollToTopHidden(false);
+      } else {
+        setScrollToTopHidden(true);
+      }
+    };
+
+    window.addEventListener("wheel", handleScrollToTop);
+
+    return () => {
+      window.removeEventListener("wheel", handleScrollToTop);
+    };
+  }, []);
   return (
     <>
       <Router>
@@ -187,7 +207,7 @@ function App() {
               />
             }
           ></Route>
-          {/* <Route path="/character/:id" element={<Character />}></Route> */}
+
           <Route
             path="/favorites"
             element={
@@ -222,6 +242,10 @@ function App() {
             element={<Login createUserCookies={createUserCookies} />}
           ></Route> */}
         </Routes>
+        {!scrollToTopHidden && (
+          <ScrollToTop setScrollToTopHidden={setScrollToTopHidden} />
+        )}
+
         <Footer />
       </Router>
     </>

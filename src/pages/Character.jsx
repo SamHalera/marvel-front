@@ -48,9 +48,18 @@ const Character = ({
       <main className="one-character-main my-48">
         <div className="container mx-auto">
           <section className="character-wrapper">
-            <h2 className="mb-9 text-center text-3xl font-bold text-white">
-              {data.name}
-            </h2>
+            <div className="mb-9 flex items-center justify-center gap-5">
+              <h2 className=" text-center text-3xl font-bold text-white">
+                {data.name}
+              </h2>
+              <FavoritesComponent
+                item={data}
+                label="character"
+                userCookies={userCookies}
+                handleAddFavorite={handleAddFavorite}
+                handleRemoveFavorite={handleRemoveFavorite}
+              />
+            </div>
             <article
               key={data.name}
               className="character flex flex-col items-center"
@@ -67,13 +76,6 @@ const Character = ({
                     You can find {data.name} in these beside{" "}
                     {data.comics.length} comics
                   </p>
-                  <FavoritesComponent
-                    item={data}
-                    label="character"
-                    userCookies={userCookies}
-                    handleAddFavorite={handleAddFavorite}
-                    handleRemoveFavorite={handleRemoveFavorite}
-                  />
                 </div>
               </div>
               <ComicsCarousel data={data} />

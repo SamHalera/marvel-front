@@ -5,17 +5,17 @@ const ImageUpload = ({ picture, data, setPicture }) => {
       <div className=" flex items-center justify-center">
         {picture ? (
           <img
-            className="test h-40 w-40 rounded-full  object-cover object-center"
+            className="test  h-28 w-28 rounded-full object-cover object-center  md:h-40 md:w-40"
             src={URL.createObjectURL(picture)}
           />
         ) : data.avatar ? (
           <img
-            className="h-40 w-40 rounded-full object-cover object-center"
+            className=" h-28 w-28 rounded-full object-cover object-center md:h-40 md:w-40"
             src={data.avatar.secure_url}
           />
         ) : (
           <FontAwesomeIcon
-            className="user-icon h-40 w-40 cursor-pointer rounded-full border border-solid border-white text-8xl text-white"
+            className="user-icon  h-28 w-28 cursor-pointer rounded-full border border-solid border-white text-3xl text-white md:h-40 md:w-40 md:text-8xl"
             icon="fa-solid fa-user"
           />
         )}
