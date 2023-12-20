@@ -119,7 +119,7 @@ const Home = ({ truncateStr, userCookies, openModal, creatoUserCookies }) => {
           </div>
         </div>
       </div>
-      <div className="section-heroe h-auto w-full lg:h-screen">
+      <div className="section-heroe h-auto w-full bg-cover bg-scroll bg-no-repeat md:bg-fixed lg:h-screen">
         <div className="flex h-screen w-full flex-col items-center justify-center bg-neutral-950 bg-opacity-80 lg:items-start">
           <div className=" lg:w-4/4  w-4/5 lg:ml-44">
             <div className="mb-8">
