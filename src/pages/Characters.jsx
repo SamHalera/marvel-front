@@ -61,15 +61,25 @@ const Characters = ({
   // console.log("userCookies==>", userCookies);
 
   return (
-    <main className="characters-main">
-      <section className="bg-img bg-settings p-[1px]">
-        <div className="overlay bg flex h-[40vh] w-full items-center justify-center bg-black bg-opacity-60"></div>
+    <main className=" mt-16">
+      <section className="bg-img mb-8  h-[50vh] bg-cover bg-scroll bg-no-repeat md:bg-fixed">
+        <div className="overlay bg flex h-[50vh] w-full flex-col items-center justify-center bg-black bg-opacity-80 p-4">
+          <h1 className="text-center text-4xl  font-bold uppercase text-white md:text-5xl">
+            Find your favorite <span className="red">Heroe</span>
+          </h1>
+          <SearchBar
+            value={name}
+            setValue={setName}
+            setSkip={setSkip}
+            label="heroe"
+          />
+        </div>
       </section>
 
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="container m-auto px-4">
+        <div className="container mx-auto my-7 px-4">
           <ModalAuth
             isOpen={isOpen}
             setIsOpen={setIsOpen}
@@ -77,28 +87,25 @@ const Characters = ({
             createUserCookies={createUserCookies}
           />
           <div className="list-container">
-            <SearchBar
-              value={name}
-              setValue={setName}
-              setSkip={setSkip}
-              label="heroe"
-            />
-            <Results data={data} />
-
-            <section className="list characters-list mt-10 flex flex-wrap justify-center gap-5">
-              {data.results.map((result) => {
-                return (
-                  <CharacterComponent
-                    key={result._id}
-                    character={result}
-                    userCookies={userCookies}
-                    handleAddFavorite={handleAddFavorite}
-                    handleRemoveFavorite={handleRemoveFavorite}
-                    openModal={openModal}
-                    truncateStr={truncateStr}
-                  />
-                );
-              })}
+            <section className="mt-10 flex flex-col items-center justify-center gap-5">
+              <div>
+                <Results data={data} />
+              </div>
+              <div className="mt-10 flex flex-wrap justify-center gap-5">
+                {data.results.map((result) => {
+                  return (
+                    <CharacterComponent
+                      key={result._id}
+                      character={result}
+                      userCookies={userCookies}
+                      handleAddFavorite={handleAddFavorite}
+                      handleRemoveFavorite={handleRemoveFavorite}
+                      openModal={openModal}
+                      truncateStr={truncateStr}
+                    />
+                  );
+                })}
+              </div>
             </section>
             <PaginationAltern
               data={{ ...data }}

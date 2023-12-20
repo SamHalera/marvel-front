@@ -6,8 +6,8 @@ import Loader from "../components/Loader";
 
 const Favorites = ({
   baseUrl,
-  displayCharacters,
-  setDisplayCharacters,
+  displayFav,
+  setDisplayFav,
   handleRemoveFavorite,
   addedToFavorites,
   userCookies,
@@ -17,7 +17,7 @@ const Favorites = ({
   const [isLoading, setIsLoading] = useState(true);
   console.log("email", user.email);
 
-  console.log("displayCharacters==>", displayCharacters);
+  console.log("displayCharacters==>", displayFav);
   // console.log("data", data.length);
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +36,7 @@ const Favorites = ({
     };
 
     fetchData();
-  }, [displayCharacters, addedToFavorites]);
+  }, [displayFav, addedToFavorites]);
   if (userCookies) {
     return isLoading ? (
       <Loader />
@@ -78,22 +78,20 @@ const Favorites = ({
             <div className="toggle-favorites flex items-center justify-center gap-8 text-2xl">
               <span
                 onClick={() => {
-                  setDisplayCharacters("character");
+                  setDisplayFav("character");
                 }}
                 className={`cursor-pointer ${
-                  displayCharacters === "character"
-                    ? "red active"
-                    : "text-white"
+                  displayFav === "character" ? "red active" : "text-white"
                 }`}
               >
                 Characters
               </span>
               <span
                 onClick={() => {
-                  setDisplayCharacters("comic");
+                  setDisplayFav("comic");
                 }}
                 className={`cursor-pointer ${
-                  displayCharacters === "comic" ? "red active" : "text-white"
+                  displayFav === "comic" ? "red active" : "text-white"
                 }`}
               >
                 Comics
@@ -104,12 +102,13 @@ const Favorites = ({
               <section className="list favorites-list mt-10 flex flex-wrap justify-center gap-5">
                 {data.map((favorite) => {
                   if (favorite.user === user._id) {
-                    if (displayCharacters === favorite.label) {
+                    if (displayFav === favorite.label) {
                       console.log("favorite id====>", favorite._id);
                       return (
-                        <article
+                        <Link
                           key={favorite._id}
-                          className="item my-5 flex w-1/2 flex-col gap-4 md:w-1/4 lg:w-1/6"
+                          to={`/${displayFav}/${favorite._id}`}
+                          className="item my-5 flex w-1/2 flex-col gap-4 hover:opacity-50 md:w-1/4 lg:w-1/6"
                         >
                           <div className="image-wrapper">
                             <img
@@ -133,7 +132,7 @@ const Favorites = ({
                               icon="fa-solid fa-heart"
                             />
                           </div>
-                        </article>
+                        </Link>
                       );
                     }
                   }

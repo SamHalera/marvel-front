@@ -166,10 +166,16 @@ footer {
 }
 /*=======CHARACTERS=======*/
 .bg-img {
-  height: 40vh;
+  /* height: 40vh; */
   background-color: #161a3a;
   width: 100%;
   background-image: url("../src/assets/images/bg-img-home.jpg");
+}
+.bg-comics {
+  /* height: 40vh; */
+  background-color: #161a3a;
+  width: 100%;
+  background-image: url("../src/assets/images/bg-comics.jpg");
 }
 .search-bar input:focus {
   outline: none;
