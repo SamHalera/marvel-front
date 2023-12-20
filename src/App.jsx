@@ -55,7 +55,7 @@ library.add(
 function App() {
   const [addedToFavorites, setAddedToFavorites] = useState(false);
 
-  const [displayCharacters, setDisplayCharacters] = useState("character");
+  const [displayFav, setDisplayFav] = useState("character");
   const [userCookies, setUserCookies] = useState(Cookies.get("user") || null);
   const [isOpen, setIsOpen] = useState(false);
   const [scrollToTopHidden, setScrollToTopHidden] = useState(true);
@@ -132,10 +132,10 @@ function App() {
       }
     };
 
-    window.addEventListener("wheel", handleScrollToTop);
+    window.addEventListener("scroll", handleScrollToTop);
 
     return () => {
-      window.removeEventListener("wheel", handleScrollToTop);
+      window.removeEventListener("scroll", handleScrollToTop);
     };
   }, []);
   return (
@@ -214,8 +214,8 @@ function App() {
               <Favorites
                 truncateStr={truncateStr}
                 baseUrl={baseUrl}
-                displayCharacters={displayCharacters}
-                setDisplayCharacters={setDisplayCharacters}
+                displayFav={displayFav}
+                setDisplayFav={setDisplayFav}
                 addedToFavorites={addedToFavorites}
                 handleRemoveFavorite={handleRemoveFavorite}
                 userCookies={userCookies}

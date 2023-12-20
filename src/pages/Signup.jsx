@@ -3,7 +3,7 @@ import Form from "../components/Form";
 
 const Signup = ({ createUserCookies }) => {
   return (
-    <main className="form-container bg-settings mb-2 h-screen py-10">
+    <main className="form-container mb-2 h-screen bg-cover bg-scroll bg-no-repeat py-10 md:bg-fixed">
       <div className="overlay flex h-screen w-full justify-center pt-16 lg:h-screen">
         <div className="container flex flex-col-reverse justify-center gap-8 p-6 lg:flex-row">
           <Form

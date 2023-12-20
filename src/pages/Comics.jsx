@@ -52,56 +52,71 @@ const Comics = ({
     fetchData();
   }, [title, skip, addedToFavorites]);
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <main className="comics-main mt-24">
-      <ModalAuth
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        openModal={openModal}
-        createUserCookies={createUserCookies}
-      />
-      <SearchBar
-        setValue={setTitle}
-        value={title}
-        setSkip={setSkip}
-        label="comic"
-      />
-
-      <div className="container m-auto p-5">
-        <div className="list-container">
-          <Results data={data} />
-
-          <section className="list comics-list mt-10 flex flex-wrap justify-center gap-5">
-            {data.results.map((result) => {
-              return (
-                <ComicComponent
-                  key={result._id}
-                  comic={result}
-                  userCookies={userCookies}
-                  handleAddFavorite={handleAddFavorite}
-                  handleRemoveFavorite={handleRemoveFavorite}
-                  openModal={openModal}
-                  truncateStr={truncateStr}
-                />
-              );
-            })}
-          </section>
+      <section className="bg-comics mb-8  h-[50vh] bg-cover bg-scroll bg-no-repeat md:bg-fixed">
+        <div className="overlay bg flex h-[50vh] w-full flex-col items-center justify-center bg-black bg-opacity-80 p-4">
+          <h1 className=" text-center text-4xl font-bold uppercase text-white md:text-5xl">
+            Find your favorite <span className="red">Comic</span>
+          </h1>
+          <SearchBar
+            value={title}
+            setValue={setTitle}
+            setSkip={setSkip}
+            label="comic"
+          />
         </div>
-      </div>
+      </section>
 
-      <PaginationAltern
-        data={{ ...data }}
-        setData={setData}
-        setIsLoading={setIsLoading}
-        page={page}
-        setPage={setPage}
-        nbPages={nbPages}
-        setSkip={setSkip}
-        apiUrl={`${baseUrl}/comics`}
-        userCookies={userCookies}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <ModalAuth
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            openModal={openModal}
+            createUserCookies={createUserCookies}
+          />
+
+          <div className="container m-auto p-5">
+            <div className="list-container">
+              <section className="list comics-list mt-10 flex flex-col flex-wrap items-center justify-center gap-5">
+                <div>
+                  <Results data={data} />
+                </div>
+                <div className="mt-10 flex flex-wrap justify-center gap-5">
+                  {data.results.map((result) => {
+                    return (
+                      <ComicComponent
+                        key={result._id}
+                        comic={result}
+                        userCookies={userCookies}
+                        handleAddFavorite={handleAddFavorite}
+                        handleRemoveFavorite={handleRemoveFavorite}
+                        openModal={openModal}
+                        truncateStr={truncateStr}
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <PaginationAltern
+            data={{ ...data }}
+            setData={setData}
+            setIsLoading={setIsLoading}
+            page={page}
+            setPage={setPage}
+            nbPages={nbPages}
+            setSkip={setSkip}
+            apiUrl={`${baseUrl}/comics`}
+            userCookies={userCookies}
+          />
+        </>
+      )}
     </main>
   );
 };
