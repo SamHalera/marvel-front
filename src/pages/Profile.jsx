@@ -12,6 +12,7 @@ const Profile = ({ user, userCookies, setUserCookies }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [data, setData] = useState();
+  const [picture, setPicture] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [userIsUpdated, setUserIsUpdated] = useState(false);
@@ -35,8 +36,13 @@ const Profile = ({ user, userCookies, setUserCookies }) => {
         console.log(error, "<=====message error");
       }
     };
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
     fetchData();
-  }, [userIsUpdated]);
+  }, [picture, userIsUpdated]);
 
   return !userCookies ? (
     navigate("/login")
@@ -52,6 +58,8 @@ const Profile = ({ user, userCookies, setUserCookies }) => {
         <div className="user-infos form-wrapper">
           <Form
             data={data}
+            picture={picture}
+            setPicture={setPicture}
             userIsUpdated={userIsUpdated}
             setUserIsUpdated={setUserIsUpdated}
             user={user}

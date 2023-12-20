@@ -2,12 +2,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const ImageUpload = ({ picture, data, setPicture }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-7">
-      <div className=" flex items-center justify-center">
+      <div className="relative flex items-center justify-center">
         {picture ? (
-          <img
-            className="test  h-28 w-28 rounded-full object-cover object-center  md:h-40 md:w-40"
-            src={URL.createObjectURL(picture)}
-          />
+          <>
+            <img
+              className="test h-28 w-28 rounded-full object-cover object-center  md:h-40 md:w-40"
+              src={URL.createObjectURL(picture)}
+            />
+            <FontAwesomeIcon
+              onClick={() => {
+                setPicture();
+              }}
+              className="user-icon red absolute -right-2 top-1 cursor-pointer text-2xl text-white"
+              icon="fa-solid fa-circle-xmark"
+            />
+          </>
         ) : data.avatar ? (
           <img
             className=" h-28 w-28 rounded-full object-cover object-center md:h-40 md:w-40"

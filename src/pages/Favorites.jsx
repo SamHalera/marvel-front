@@ -34,7 +34,11 @@ const Favorites = ({
         console.log(error.response, "message error");
       }
     };
-
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
     fetchData();
   }, [displayFav, addedToFavorites]);
   if (userCookies) {

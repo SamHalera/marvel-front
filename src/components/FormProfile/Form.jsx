@@ -11,6 +11,8 @@ import InputPass from "./InputPass";
 import ButtonForm from "./ButtonForm";
 const Form = ({
   data,
+  picture,
+  setPicture,
   userIsUpdated,
   setUserIsUpdated,
   user,
@@ -25,7 +27,6 @@ const Form = ({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [picture, setPicture] = useState("");
 
   const [showPass, setShowPass] = useState(false);
   const [showNewPass, setShowNewPass] = useState(false);
