@@ -42,7 +42,7 @@ const Profile = ({ user, userCookies, setUserCookies }) => {
       behavior: "smooth",
     });
     fetchData();
-  }, [picture, userIsUpdated]);
+  }, [userIsUpdated]);
 
   return !userCookies ? (
     navigate("/login")
